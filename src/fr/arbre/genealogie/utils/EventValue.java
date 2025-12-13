@@ -28,7 +28,7 @@ public abstract class EventValue extends TagTemplate {
 
 	@Override
 	public String export() {
-		return "  ".repeat(this.getNiveau()) + this.getNiveau() + this.getTag() + this.eventValue + "\n";
+		return "  ".repeat(this.getNiveau()) + " " + this.getNiveau() + " " + this.getTag() + " " + this.eventValue;
 	}
 
 	public String getEventValue() {

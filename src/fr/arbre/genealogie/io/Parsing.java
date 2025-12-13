@@ -35,6 +35,12 @@ public class Parsing{
 			FileReader fr = null;
 			BufferedReader content_file = null;
 			try {
+				if (filepath.charAt(0) == '"'){
+					filepath = filepath.substring(1);
+				}
+				if (filepath.charAt(filepath.length()-1) == '"') {
+					filepath = filepath.substring(0,filepath.length()-1);
+				}
 				fr = new FileReader(filepath);
 				content_file = new BufferedReader(fr);
 
@@ -114,7 +120,7 @@ public class Parsing{
 			
 			} catch (IOException e) {
 				e.printStackTrace();
-			} finally {				
+			} finally {
 					try {
 						content_file.close();
 						fr.close();

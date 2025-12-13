@@ -38,6 +38,9 @@ public class Siblings implements Command {
 		if (indi == null) {
 			throw new MissingEntreeException("Aucun individu n'a été trouvé !", -1);
 		}
+		if (indi.getFamille() == null) {
+			throw new MissingEntreeException("Cet individu n'a pas de famille renseignée.", -1);
+		}
 		ArrayList<Individu> liste_frere_soeur = indi.getFamille().getEnfants();
 		String res = "";
 		if (liste_frere_soeur.size() > 1) {

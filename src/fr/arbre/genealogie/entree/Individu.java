@@ -47,16 +47,16 @@ public class Individu extends Entree{
 					current = this.nom;
 				} else if(splited[1].equals(this.sexe.getTag())) {
 					current = this.sexe;
-				} else if (splited[1].equals(this.famille.getTag()) || splited[1].equals("FAMS")){
+				} else if (splited[1].equals("FAMC") || splited[1].equals("FAMS")){
 					int id = Integer.parseInt(splited[2].substring(2,splited[2].length()-1));
 					current = Shell.getBddFam(id);
 					if (current == null) {
-						MissingEntreeException e = new MissingEntreeException("Famille manquante, création de la famille...", cpt_ligne);
-						e.getMessage(); //TODO A verifier
+						MissingEntreeException e = new MissingEntreeException("Famille manquante, création de la famille...", cpt_ligne+i);
+						System.err.println(e.getMessage()); //TODO A verifier
 						current = new Famille(id);
 						Shell.addBddFam((Famille) current);
 					}
-					if (splited[1].equals(this.famille.getTag())) {
+					if (splited[1].equals("FAMC")) {
 						if (this.famille == null) {
 							this.famille = (Famille) current;
 						}
@@ -71,7 +71,7 @@ public class Individu extends Entree{
 					current = new Objet();
 					this.liste_objet.add((Objet) current);
 				}
-				if (!(splited[1].equals(this.famille.getTag()) || splited[1].equals("FAMS"))) {
+				if (!(splited[1].equals("FAMC") || splited[1].equals("FAMS"))) {
 					current.setLigne(cpt_ligne);
 				}
 				current.parser(lines.get(i).trim(), cpt_ligne+i);
@@ -164,7 +164,7 @@ public class Individu extends Entree{
 		for (Objet obj : liste_objet) {
 			res += obj.export() + "\n";
 		}
-		return res;
+		return res + "\n";
 	}
 
 	public Name getNom() {

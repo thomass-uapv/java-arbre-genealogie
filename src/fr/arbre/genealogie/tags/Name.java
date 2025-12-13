@@ -23,6 +23,7 @@ public class Name extends TagTemplate{
 			for (int i = 2; i < splited.size(); i++) {
 				if (splited.get(i).substring(0, 1).equals("/")) {
 					this.nom = texte.substring(texte.indexOf("/")+1,texte.length()-1);
+					break;
 				} else {
 					this.prenoms.add(splited.get(i));
 				}
@@ -32,13 +33,13 @@ public class Name extends TagTemplate{
 	
 	@Override
 	public String export() {
-		String res = "  ".repeat(this.getNiveau());
+		String res = "  ".repeat(this.getNiveau()) + " " + this.getNiveau() + " " + this.getTag() + " ";
 		if (this.prenoms.size() > 0) {			
 			for (String p : this.prenoms) {
 				res += p + " ";
 			}
 		}
-		res += "/" + this.nom + "/" + "\n";
+		res += "/" + this.nom + "/";
 		return res;
 	}
 

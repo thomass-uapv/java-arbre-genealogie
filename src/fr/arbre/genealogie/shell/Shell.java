@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import fr.arbre.genealogie.entree.Famille;
 import fr.arbre.genealogie.entree.Individu;
 import fr.arbre.genealogie.exceptions.ArbreGenalogieException;
+import fr.arbre.genealogie.exceptions.InvalidIdentifiantsException;
 import fr.arbre.genealogie.shell.commands.*;
 
 
@@ -36,6 +37,7 @@ public class Shell {
 		Married married = new Married();
 		Famc famc = new Famc();
 		Save save = new Save();
+		Graph graph = new Graph();
 
 		ArrayList<String> liste_cmd = new ArrayList<String>();
 		liste_cmd.add(h.getDescription());
@@ -48,6 +50,7 @@ public class Shell {
 		liste_cmd.add(married.getDescription());
 		liste_cmd.add(famc.getDescription());
 		liste_cmd.add(save.getDescription());
+		liste_cmd.add(graph.getDescription());
 
 		h.setListe_command(liste_cmd);
 
@@ -72,10 +75,10 @@ public class Shell {
 				String command;
 				String args;
 				if (first_space != -1) {
-					command = in.substring(0, first_space);
+					command = in.substring(0, first_space).trim();
 					args = in.substring(first_space+1);
 				} else {
-					command = in;
+					command = in.trim();
 					args = null;
 				}
 
@@ -100,6 +103,9 @@ public class Shell {
 				} else if (command.equalsIgnoreCase("famc")){
 					famc.setArgs(args);
 					System.out.println(famc.getResult());
+				} else if (command.equalsIgnoreCase("graph")) {
+					graph.setArgs(args);
+					System.out.println(graph.getResult());
 				} else if (command.equals("export") || command.equalsIgnoreCase("save")) {
 					save.setArgs(args);
 					System.out.println(save.getResult());
@@ -114,10 +120,14 @@ public class Shell {
 					System.err.println("Commande incorrecte ou inexistante...");
 				}
 			} catch (IOException err) {
-				//TODO
-				err.printStackTrace();
+				System.err.println(err.getMessage());
+			} catch (InvalidIdentifiantsException e1) {
+				System.err.println(e1.getMessage());
+				System.err.println("Réinitialisation de la base.");
+				Shell.clearBddListFam();
+				Shell.clearBddListInd();
 			} catch (ArbreGenalogieException e1) {
-				e1.getMessage();
+				System.err.println(e1.getMessage());
 			}
 		}
 	}

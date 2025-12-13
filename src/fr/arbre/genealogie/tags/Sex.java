@@ -30,7 +30,7 @@ public class Sex extends TagTemplate{
 
 	@Override
 	public String export() {
-		return "  ".repeat(this.getNiveau()) + this.getNiveau() + this.getTag() + this.value;
+		return "  ".repeat(this.getNiveau()) + " " + this.getNiveau() + " " + this.getTag() + " " + this.value;
 	}
 	
 	public String getValue() {

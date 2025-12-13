@@ -23,7 +23,7 @@ public class Save implements Command{
 	@Override
 	public String getResult() throws IOException, ArgsNullException{
 		if (args == null) {
-			throw new ArgsNullException("Veuillez donner un argument");
+			this.args = "output.ged";
 		}
 		Export exp = new Export(args);
 		String path = exp.export();

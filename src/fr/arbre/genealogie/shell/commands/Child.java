@@ -47,6 +47,8 @@ public class Child implements Command{
 					res += "\n ---- \n" + enfant.toString();
 				}
 			}
+		} else {
+			res += "Cet individu n'a aucun enfants";
 		}
 		return res.trim();
 	}

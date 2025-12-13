@@ -50,9 +50,9 @@ public abstract class Event extends TagTemplate{
 
 	@Override
 	public String export() {
-		return "  ".repeat(this.getNiveau()) + this.getNiveau() + this.getTag() + "\n" +
+		return "  ".repeat(this.getNiveau()) + " " + this.getNiveau() + " " + this.getTag() + "\n" +
 				this.date.export() + "\n" +
-				this.lieu.export() + "\n";
+				this.lieu.export();
 	}
 
 	public Date getDate() {

@@ -3,6 +3,8 @@ package fr.arbre.genealogie.shell.commands;
 import java.util.ArrayList;
 
 import fr.arbre.genealogie.entree.Individu;
+import fr.arbre.genealogie.exceptions.ArgsNullException;
+import fr.arbre.genealogie.exceptions.InvalidIdentifiantsException;
 import fr.arbre.genealogie.shell.Shell;
 import fr.arbre.genealogie.utils.Command;
 
@@ -28,9 +30,9 @@ public class Married implements Command{
 	}
 
 	@Override
-	public String getResult(){
+	public String getResult() throws ArgsNullException, InvalidIdentifiantsException{
 		if (args.size() < 2) {
-			return "Il manque au moins 1 argument";
+			throw new ArgsNullException("Il manque au moins 1 argument");
 		}
 		Individu indi1;
 		Individu indi2;
@@ -46,10 +48,10 @@ public class Married implements Command{
 		} catch (NumberFormatException  e) {
 			indi2 = Shell.getBddInd(this.args.get(1));
 		}
-		if (indi1 == null) { //TODO Modifier ça en exceptions
-			return "L'individu " + args.get(0) + " n'a pas été trouvé !";
+		if (indi1 == null) {
+			throw new InvalidIdentifiantsException("L'individu " + args.get(0) + " n'a pas été trouvé !");
 		} else if (indi2 == null) {
-			return "L'individu " + args.get(1) + " n'a pas été trouvé !";
+			throw new InvalidIdentifiantsException("L'individu " + args.get(1) + " n'a pas été trouvé !");
 		}
 		for(Individu marWith : indi1.marriedWith()) {			
 			if (marWith.equals(indi2)) {

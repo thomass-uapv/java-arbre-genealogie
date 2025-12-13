@@ -1,6 +1,6 @@
 package fr.arbre.genealogie.shell.commands;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import fr.arbre.genealogie.entree.Famille;
 import fr.arbre.genealogie.entree.Individu;
@@ -26,7 +26,7 @@ public class Import implements Command {
 		this.p = null;
 	}
 
-	public String getResult() throws InvalidParameterException, InvalidIdentifiantsException, ArgsNullException, FileNotFoundException, IncorrectSexeException, CycleException {
+	public String getResult() throws InvalidParameterException, InvalidIdentifiantsException, ArgsNullException, IncorrectSexeException, CycleException, IOException {
 		if (args == null) {
 			throw new ArgsNullException("Veuillez donner un argument");
 		}
@@ -46,7 +46,7 @@ public class Import implements Command {
 		}
 		return "Importation réussie !";
 	}
-	
+
 	public void checkCycle(Individu indi) throws CycleException{
 		if (indi.getFamille() != null) {
 			if (indi.getFamille().getMere().equals(indi) || indi.getFamille().getPere().equals(indi)) {
@@ -57,7 +57,7 @@ public class Import implements Command {
 			}
 		} 
 	}
-	
+
 	public void checkSexe() throws IncorrectSexeException {
 		for (Famille fam : Shell.getBddListFam()) {
 			if (fam.getMere().getSexe().getValue().equals("M")) {
@@ -66,63 +66,74 @@ public class Import implements Command {
 				throw new IncorrectSexeException("Sexe du père de la famille @F" + fam.getIdentificateur() + "@ incorrect.");
 			}
 		}
-		
+
 	}
 
 	public void checkReciprocalLink() throws IncorrectSexeException {
 		for(Individu indi : Shell.getBddListInd()) {
-			if (!indi.getFamille().getEnfants().contains(indi)) {
+			if (indi.getFamille() != null && !indi.getFamille().getEnfants().contains(indi)) {
 				MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @I" + indi.getIdentificateur() + "@ (Enfant) -> @F" + indi.getFamille().getIdentificateur() + "@ n'est pas réciproque. Création du lien réciproque...");
-				e.getMessage();
+				System.err.println(e.getMessage());
 				indi.getFamille().getEnfants().add(indi);
 			}
 			for (Famille fam : indi.getListe_famille_p()) {
-				if (!(fam.getPere().equals(indi) || fam.getMere().equals(indi))) {
-					MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @I" + indi.getIdentificateur() + "@ (Parent) -> @F" + fam.getIdentificateur() + "@ n'est pas réciproque. Création du lien réciproque...");
-					e.getMessage();
-					String sexe_indi = indi.getSexe().getValue();
-					if (sexe_indi.equals("M")) {
+				String sexe_indi = indi.getSexe().getValue();
+				if (sexe_indi.equals("M")) {
+					if (fam.getPere() == null || !fam.getPere().equals(indi)) {
+						MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @I" + indi.getIdentificateur() + "@ (Père) -> @F" + fam.getIdentificateur() + "@ n'est pas réciproque. Création du lien réciproque...");
+						System.err.println(e.getMessage());
 						fam.setPere(indi);
-					} else if (sexe_indi.equals("F")) {
+					}
+				} else if (sexe_indi.equals("F")) {
+					if (fam.getMere() == null || !fam.getMere().equals(indi)) {
+						MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @I" + indi.getIdentificateur() + "@ (Mère) -> @F" + fam.getIdentificateur() + "@ n'est pas réciproque. Création du lien réciproque...");
+						System.err.println(e.getMessage());
 						fam.setMere(indi);
-					} else { // UNKNOWN
+					}
+				} else {
+					if (fam.getPere() != null && fam.getMere() == null) {
+						fam.setMere(indi);
+					} else if (fam.getMere() != null && fam.getPere() == null) {
+						fam.setPere(indi);
+					} else if (fam.getMere() == null && fam.getPere() == null){						
 						throw new IncorrectSexeException("Impossible de déterminer si l'individu est père ou mère.");
 					}
-				}
+				}				
 			}
 		}
-		
-		for (Famille fam : Shell.getBddListFam()) {
-			if (!(fam.getPere().getListe_famille_p().contains(fam))) {
-				MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @F" + fam.getPere().getIdentificateur() + "@ -> @I" + fam.getIdentificateur() + "@ (Père) n'est pas réciproque. Création du lien réciproque...");
-				e.getMessage();
-				fam.getPere().getListe_famille_p().add(fam);
-			}
-			if (!(fam.getMere().getListe_famille_p().contains(fam))) {
-				MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @F" + fam.getMere().getIdentificateur() + "@-> @I" + fam.getIdentificateur() + "@ (Mère) n'est pas réciproque. Création du lien réciproque...");
-				e.getMessage();
-				fam.getMere().getListe_famille_p().add(fam);
-			}
-			for (Individu indi : fam.getEnfants()) {
-				if (!(indi.getFamille().equals(fam))) {
-					MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @F" + fam.getMere().getIdentificateur() + "@ -> @I" + fam.getIdentificateur() + "@ (Enfant) n'est pas réciproque. Création du lien réciproque...");
-					e.getMessage();
-					indi.setFamille(fam);
-				}
+
+	for (Famille fam : Shell.getBddListFam()) {
+		if (fam.getPere() != null && !(fam.getPere().getListe_famille_p().contains(fam))) {
+			MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @F" + fam.getPere().getIdentificateur() + "@ -> @I" + fam.getIdentificateur() + "@ (Père) n'est pas réciproque. Création du lien réciproque...");
+			System.err.println(e.getMessage());
+			fam.getPere().getListe_famille_p().add(fam);
+		}
+		if (fam.getMere() != null && !(fam.getMere().getListe_famille_p().contains(fam))) {
+			MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @F" + fam.getMere().getIdentificateur() + "@-> @I" + fam.getIdentificateur() + "@ (Mère) n'est pas réciproque. Création du lien réciproque...");
+			System.err.println(e.getMessage());
+			fam.getMere().getListe_famille_p().add(fam);
+		}
+		for (Individu indi : fam.getEnfants()) {
+			//TODO
+			if (indi.getFamille() == null || !(indi.getFamille().equals(fam))) {
+				MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @F" + fam.getMere().getIdentificateur() + "@ -> @I" + fam.getIdentificateur() + "@ (Enfant) n'est pas réciproque. Création du lien réciproque...");
+				System.err.println(e.getMessage());
+				indi.setFamille(fam);
 			}
 		}
 	}
-	
+}
 
-	public String getDescription() {
-		return this.description;
-	}
 
-	public void setArgs(String args) {
-		this.args = args;
-	}
+public String getDescription() {
+	return this.description;
+}
 
-	public Parsing getP() {
-		return p;
-	}
+public void setArgs(String args) {
+	this.args = args;
+}
+
+public Parsing getP() {
+	return p;
+}
 }

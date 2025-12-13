@@ -41,8 +41,8 @@ public class Famille extends Entree{
 					int id = Integer.parseInt(splited[2].substring(2,splited[2].length()-1));
 					current = Shell.getBddInd(id);
 					if (current == null) {
-						MissingEntreeException e = new MissingEntreeException("Individu manquant, création de l'individu...", cpt_ligne);
-						e.getMessage(); //TODO A verifier
+						MissingEntreeException e = new MissingEntreeException("Individu manquant, création de l'individu...", cpt_ligne+i);
+						System.err.println(e.getMessage()); //TODO A verifier
 						current = new Individu(id);
 						Shell.addBddInd((Individu) current);
 					}
@@ -120,8 +120,8 @@ public class Famille extends Entree{
 		}
 		for (Individu indi : this.enfants) {
 			res += "  " + Integer.toString(this.getNiveau() + 1) + " CHIL @I" + indi.getIdentificateur() + "@\n";
-		}		
-		return res;
+		}
+		return res + "\n";
 		
 	}
 	
