@@ -7,8 +7,7 @@ import java.util.ArrayList;
 
 import fr.arbre.genealogie.entree.Famille;
 import fr.arbre.genealogie.entree.Individu;
-import fr.arbre.genealogie.exceptions.InvalidIdentifiantsException;
-import fr.arbre.genealogie.exceptions.InvalidParameterException;
+import fr.arbre.genealogie.exceptions.ArbreGenalogieException;
 import fr.arbre.genealogie.shell.commands.*;
 
 
@@ -36,6 +35,7 @@ public class Shell {
 		Siblings siblings = new Siblings();
 		Married married = new Married();
 		Famc famc = new Famc();
+		Save save = new Save();
 
 		ArrayList<String> liste_cmd = new ArrayList<String>();
 		liste_cmd.add(h.getDescription());
@@ -47,6 +47,7 @@ public class Shell {
 		liste_cmd.add(siblings.getDescription());
 		liste_cmd.add(married.getDescription());
 		liste_cmd.add(famc.getDescription());
+		liste_cmd.add(save.getDescription());
 
 		h.setListe_command(liste_cmd);
 
@@ -99,6 +100,9 @@ public class Shell {
 				} else if (command.equalsIgnoreCase("famc")){
 					famc.setArgs(args);
 					System.out.println(famc.getResult());
+				} else if (command.equals("export") || command.equalsIgnoreCase("save")) {
+					save.setArgs(args);
+					System.out.println(save.getResult());
 				} else if (command.equals("?") || command.equalsIgnoreCase("help")) {
 					System.out.println(h.getResult());
 				} else if (command.equalsIgnoreCase("quit") || command.equalsIgnoreCase("stop") || command.equalsIgnoreCase("exit")) {
@@ -112,9 +116,8 @@ public class Shell {
 			} catch (IOException err) {
 				//TODO
 				err.printStackTrace();
-			} catch (Exception err) {
-				err.getMessage();
-				System.err.println("Veuillez réessayer avec un fichier valide");
+			} catch (ArbreGenalogieException e1) {
+				e1.getMessage();
 			}
 		}
 	}

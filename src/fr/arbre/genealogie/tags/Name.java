@@ -29,6 +29,18 @@ public class Name extends TagTemplate{
 			}
 		}
 	}
+	
+	@Override
+	public String export() {
+		String res = "  ".repeat(this.getNiveau());
+		if (this.prenoms.size() > 0) {			
+			for (String p : this.prenoms) {
+				res += p + " ";
+			}
+		}
+		res += "/" + this.nom + "/" + "\n";
+		return res;
+	}
 
 	@Override
 	public String toString() {

@@ -1,6 +1,6 @@
 package fr.arbre.genealogie.exceptions;
 
-public class ArgsNullException extends ArbreGenalogieException{
+public class ArgsNullException extends CommandException{
 
 	/**
 	 * 

@@ -3,6 +3,7 @@ package fr.arbre.genealogie.entree;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import fr.arbre.genealogie.exceptions.MissingEntreeException;
 import fr.arbre.genealogie.shell.Shell;
 import fr.arbre.genealogie.tags.Birth;
 import fr.arbre.genealogie.tags.Death;
@@ -50,6 +51,8 @@ public class Individu extends Entree{
 					int id = Integer.parseInt(splited[2].substring(2,splited[2].length()-1));
 					current = Shell.getBddFam(id);
 					if (current == null) {
+						MissingEntreeException e = new MissingEntreeException("Famille manquante, création de la famille...", cpt_ligne);
+						e.getMessage(); //TODO A verifier
 						current = new Famille(id);
 						Shell.addBddFam((Famille) current);
 					}
@@ -116,14 +119,14 @@ public class Individu extends Entree{
 					"Naissance : \n  " + this.naissance.toString() + "\n" +
 					"Décès : \n  " + this.deces.toString() + "\n" +
 					"Famille : UNKNOWN \n" + 
-					"Familles où l'individu est parent :" + "\n";
+					"Familles où l'individu est parent :\n";
 		} else {
 			res = "Prénoms & Nom : " + nom.toString() + "\n" + 
 					"Sexe : " + sexe.toString() + "\n" +
 					"Naissance : \n  " + this.naissance.toString() + "\n" +
 					"Décès : \n  " + this.deces.toString() + "\n" +
 					"Famille : " + Integer.toString(famille.getIdentificateur()) + "\n" + 
-					"Familles où l'individu est parent :" + "\n";
+					"Familles où l'individu est parent :\n";
 		}
 		if (liste_famille_p.size() == 0) {
 			res += "   AUCUNE \n";
@@ -131,6 +134,35 @@ public class Individu extends Entree{
 			for(Famille fam : liste_famille_p) {
 				res += " - @F" + Integer.toString(fam.getIdentificateur()) + "@\n";
 			}
+		}
+		
+		res += "Liste des documents associé à cette personne :\n";
+		if (liste_objet.size() == 0) {
+			res += "   AUCUN \n";
+		} else {
+			for (int i = 0; i < liste_objet.size(); i++) {
+				res += " " + i+1 + ". " + liste_objet.get(i) +"\n";
+			}
+		}
+		return res;
+	}
+	
+	@Override
+	public String export() {
+		String res = this.getNiveau() + " @I" + this.getIdentificateur() + "@ " + this.getTag() + "\n" +
+					this.nom.export() + "\n" +
+					this.sexe.export() + "\n" +
+					this.naissance.export() + "\n" +
+					this.deces.export() + "\n";
+		
+		if (this.famille != null) {
+			res += "  ".repeat(this.getNiveau() + 1) + Integer.toString(this.getNiveau() + 1) + " " + famille.getTag() + " @F" + famille.getIdentificateur() + "@\n";
+		}
+		for (Famille fam : this.liste_famille_p) {
+			res += "  ".repeat(this.getNiveau() + 1) + Integer.toString(this.getNiveau() + 1) + " " + fam.getTag() + " @F" + fam.getIdentificateur() + "@\n";
+		}
+		for (Objet obj : liste_objet) {
+			res += obj.export() + "\n";
 		}
 		return res;
 	}

@@ -31,4 +31,14 @@ public class Format extends TagTemplate{
 		this.f = f;
 	}
 
+	@Override
+	public String export() {
+		return "  ".repeat(this.getNiveau()) + this.getNiveau() + this.getTag() + this.f;
+	}
+
+	@Override
+	public String toString() {
+		return this.f;
+	}
+
 }

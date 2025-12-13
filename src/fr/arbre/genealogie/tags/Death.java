@@ -1,5 +1,7 @@
 package fr.arbre.genealogie.tags;
 
+import fr.arbre.genealogie.utils.Event;
+
 public class Death extends Event{
 
 	public Death() {
@@ -8,7 +10,7 @@ public class Death extends Event{
 
 	@Override
 	public String toString() {
-		return "Décédé(e) le " + this.getDate().getEventValue() + " - Lieu de décès : " + this.getLieu().getEventValue();
+		return "Décédé(e) le " + this.getDate() + " - Lieu de décès : " + this.getLieu();
 	}
 
 }

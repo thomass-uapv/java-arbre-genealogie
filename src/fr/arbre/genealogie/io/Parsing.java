@@ -29,7 +29,7 @@ public class Parsing{
 
 
 	public void parser(String filepath) throws InvalidParameterException, InvalidIdentifiantsException, FileNotFoundException {
-		if (filepath == null || filepath.isEmpty()) {
+		if (filepath.isEmpty()) {
 			throw new InvalidParameterException("Paramètre filepath vide.");
 		} else {
 			FileReader fr = null;

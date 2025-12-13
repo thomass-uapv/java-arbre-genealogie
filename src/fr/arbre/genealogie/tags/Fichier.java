@@ -27,4 +27,14 @@ public class Fichier extends TagTemplate{
 		return url;
 	}
 
+	@Override
+	public String export() {
+		return "  ".repeat(this.getNiveau()) + this.getNiveau() + this.getTag() + this.url;
+	}
+
+	@Override
+	public String toString() {
+		return this.url;
+	}
+
 }

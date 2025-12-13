@@ -6,11 +6,11 @@ import java.util.Arrays;
 import fr.arbre.genealogie.utils.TagTemplate;
 
 public class Sex extends TagTemplate{
-	private String sexe;
+	private String value;
 
 	public Sex() {
 		super(1, "SEX");
-		this.sexe = "UNKNOWN";
+		this.value = "UNKNOWN";
 	}
 
 	@Override
@@ -18,26 +18,29 @@ public class Sex extends TagTemplate{
 		ArrayList<String> splited = new ArrayList<String>(Arrays.asList(texte.split(" ")));
 		if (splited.size() > 2) {
 			if (splited.get(2).equals("M") || splited.get(2).equals("F")) {
-				this.sexe = splited.get(2);
-			} else {
-				//TODO Renvoyer une erreur ?
+				this.value = splited.get(2);
 			}
 		}
 	}
 	
 	@Override
 	public String toString() {
-		return this.sexe;
+		return this.value;
 	}
 
-	public String getSexe() {
-		return sexe;
-	}
-
-	public void setSexe(String sexe) {
-		this.sexe = sexe;
+	@Override
+	public String export() {
+		return "  ".repeat(this.getNiveau()) + this.getNiveau() + this.getTag() + this.value;
 	}
 	
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String sexe) {
+		this.value = sexe;
+	}
+
 		
 
 }

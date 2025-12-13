@@ -1,24 +1,20 @@
-package fr.arbre.genealogie.tags;
+package fr.arbre.genealogie.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import fr.arbre.genealogie.utils.TagTemplate;
+import fr.arbre.genealogie.tags.Date;
+import fr.arbre.genealogie.tags.Place;
 
-/**
- * 
- */
-public class Objet extends TagTemplate{
+public abstract class Event extends TagTemplate{
 
-	private Format format;
-	private Title titre;
-	private Fichier fichier;
+	private Date date;
+	private Place lieu;
 
-	public Objet() {
-		super(1, "OBJE");
-		this.format = new Format();
-		this.titre = new Title();
-		this.fichier = new Fichier();
+	public Event(int niveau, String tag) {
+		super(niveau, tag);
+		this.date = new Date();
+		this.lieu = new Place();
 	}
 
 	@Override
@@ -29,12 +25,10 @@ public class Objet extends TagTemplate{
 		while (i < lines.size()) {
 			String[] splited = lines.get(i).split(" ");
 			if (splited[0].equals(Integer.toString(this.getNiveau() + 1))) {
-				if (splited[1].equals(this.format.getTag())) {
-					current = this.format;
-				} else if(splited[1].equals(this.titre.getTag())) {
-					current = this.titre;
-				} else if(splited[1].equals(this.fichier.getTag())) {
-					current = this.fichier;
+				if (splited[1].equals(this.date.getTag())) {
+					current = this.date;
+				} else if(splited[1].equals(this.lieu.getTag())) {
+					current = this.lieu;
 				}
 				current.parser(lines.get(i).trim(), cpt_ligne+i);
 				i++;
@@ -57,19 +51,24 @@ public class Objet extends TagTemplate{
 	@Override
 	public String export() {
 		return "  ".repeat(this.getNiveau()) + this.getNiveau() + this.getTag() + "\n" +
-				this.titre.export() + "\n" +
-				this.format.export() + "\n" +
-				this.fichier.export() + "\n";
+				this.date.export() + "\n" +
+				this.lieu.export() + "\n";
 	}
 
-	@Override
-	public String toString() {
-		return "Document :\n" +
-				"  - Titre : " + this.titre + "\n" +
-				"  - Format : " + this.format + "\n" + 
-				"  - Lien : " + this.fichier + "\n";
+	public Date getDate() {
+		return date;
 	}
-	
-	
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Place getLieu() {
+		return lieu;
+	}
+
+	public void setLieu(Place lieu) {
+		this.lieu = lieu;
+	}
 
 }

@@ -1,6 +1,8 @@
 package fr.arbre.genealogie.shell.commands;
 
 import fr.arbre.genealogie.entree.Individu;
+import fr.arbre.genealogie.exceptions.ArgsNullException;
+import fr.arbre.genealogie.exceptions.MissingEntreeException;
 import fr.arbre.genealogie.shell.Shell;
 import fr.arbre.genealogie.utils.Command;
 
@@ -20,9 +22,9 @@ public class Info implements Command{
 	}
 	
 	@Override
-	public String getResult(){
+	public String getResult() throws ArgsNullException, MissingEntreeException{
 		if (args == null) {
-			return "Veuillez donner un argument";
+			throw new ArgsNullException("Veuillez donner un argument");
 		}
 		Individu indi;
 		try {
@@ -32,7 +34,7 @@ public class Info implements Command{
 			indi = Shell.getBddInd(args);
 		}
 		if (indi == null) {
-			return "Aucun individu n'a été trouvé !";
+			throw new MissingEntreeException("Aucun individu n'a été trouvé !", -1);
 		}
 		return indi.toString();
 	}

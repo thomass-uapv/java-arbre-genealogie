@@ -3,6 +3,7 @@ package fr.arbre.genealogie.entree;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import fr.arbre.genealogie.exceptions.MissingEntreeException;
 import fr.arbre.genealogie.shell.Shell;
 import fr.arbre.genealogie.tags.Marriage;
 import fr.arbre.genealogie.utils.Entree;
@@ -40,6 +41,8 @@ public class Famille extends Entree{
 					int id = Integer.parseInt(splited[2].substring(2,splited[2].length()-1));
 					current = Shell.getBddInd(id);
 					if (current == null) {
+						MissingEntreeException e = new MissingEntreeException("Individu manquant, création de l'individu...", cpt_ligne);
+						e.getMessage(); //TODO A verifier
 						current = new Individu(id);
 						Shell.addBddInd((Individu) current);
 					}
@@ -104,7 +107,24 @@ public class Famille extends Entree{
 		res += this.mariage.toString();
 		return res;
 	}
-
+	
+	@Override
+	public String export() {
+		String res = this.getNiveau() + " @F" + this.getIdentificateur() + "@" + this.getTag() + "\n" +
+					this.mariage.export() + "\n";
+		if (this.pere != null) {
+			res += "  " + Integer.toString(this.getNiveau() + 1) + " HUSB @I" + this.pere.getIdentificateur() + "@\n";
+		}
+		if (this.mere != null) {
+			res += "  " + Integer.toString(this.getNiveau() + 1) + " WIFE @I" + this.mere.getIdentificateur() + "@\n";
+		}
+		for (Individu indi : this.enfants) {
+			res += "  " + Integer.toString(this.getNiveau() + 1) + " CHIL @I" + indi.getIdentificateur() + "@\n";
+		}		
+		return res;
+		
+	}
+	
 	public Individu getPere() {
 		return pere;
 	}

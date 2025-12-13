@@ -13,6 +13,11 @@ public abstract class TagTemplate {
 	}
 	
 	public abstract void parser(String texte, int cpt_ligne);
+	
+	public abstract String export();
+	
+	@Override
+	public abstract String toString();
 
 	public int getNiveau() {
 		return niveau;

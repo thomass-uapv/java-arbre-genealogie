@@ -31,4 +31,14 @@ public class Title extends TagTemplate{
 		this.t = t;
 	}
 
+	@Override
+	public String export() {
+		return "  ".repeat(this.getNiveau()) + this.getNiveau() + this.getTag() + this.t;
+	}
+
+	@Override
+	public String toString() {
+		return this.t;
+	}
+
 }

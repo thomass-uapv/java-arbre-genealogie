@@ -10,7 +10,5 @@ public class ParserException extends ArbreGenalogieException{
 	public ParserException(String msg, int ligne) {
 		super("ParserException - " + msg + " - [ligne : " + ligne + "]");
 	}
-	
-	
 
 }
