@@ -10,11 +10,11 @@ public class Format extends TagTemplate{
 
 	public Format() {
 		super(2, "FORM");
-		this.setF("UNKNOWN");
+		this.f = "UNKNOWN";
 	}
 
 	@Override
-	public void parser(String texte, int cpt_ligne) {
+	public void parser(String texte, int cptLigne) {
 		ArrayList<String> splited = new ArrayList<String>(Arrays.asList(texte.split(" ")));
 		
 		if (splited.size() > 2) {
@@ -26,7 +26,7 @@ public class Format extends TagTemplate{
 	public String getF() {
 		return f;
 	}
-
+	
 	public void setF(String f) {
 		this.f = f;
 	}

@@ -26,7 +26,7 @@ public class Famille extends Entree{
 	}
 
 	@Override
-	public void parser(String texte, int cpt_ligne) {
+	public void parser(String texte, int cptLigne) {
 		TagTemplate current = null;
 		ArrayList<String> lines = new ArrayList<String>(Arrays.asList(texte.split("\n")));
 		int i = 0;
@@ -36,13 +36,13 @@ public class Famille extends Entree{
 				current = null;
 				if (splited[1].equals(this.mariage.getTag())) {
 					current = this.mariage;
-					current.setLigne(cpt_ligne);
+					current.setLigne(cptLigne+i);
 				} else if (splited[1].equals("HUSB") || splited[1].equals("WIFE") || splited[1].equals("CHIL")){
 					int id = Integer.parseInt(splited[2].substring(2,splited[2].length()-1));
 					current = Shell.getBddInd(id);
 					if (current == null) {
-						MissingEntreeException e = new MissingEntreeException("Individu manquant, création de l'individu...", cpt_ligne+i);
-						System.err.println(e.getMessage()); //TODO A verifier
+						MissingEntreeException e = new MissingEntreeException("Individu manquant, création de l'individu...", cptLigne+i);
+						System.err.println(e.getMessage());
 						current = new Individu(id);
 						Shell.addBddInd((Individu) current);
 					}
@@ -58,11 +58,11 @@ public class Famille extends Entree{
 			} else {
 				if (current != null) {					
 					String bloc = lines.get(i++).trim() + "\n";
-					int cpt_ligne_debut_bloc = cpt_ligne+i-1;
+					int cptLigneDebutBloc = cptLigne+i-1;
 					while (i < lines.size() && !lines.get(i).trim().split(" ")[0].equals(Integer.toString(this.getNiveau() + 1))) {
 						bloc += lines.get(i++).trim() + "\n";
 					}
-					current.parser(bloc, cpt_ligne_debut_bloc);
+					current.parser(bloc, cptLigneDebutBloc);
 				} else {
 					i++;
 				}
@@ -110,7 +110,7 @@ public class Famille extends Entree{
 	
 	@Override
 	public String export() {
-		String res = this.getNiveau() + " @F" + this.getIdentificateur() + "@" + this.getTag() + "\n" +
+		String res = this.getNiveau() + " @F" + this.getIdentificateur() + "@ " + this.getTag() + "\n" +
 					this.mariage.export() + "\n";
 		if (this.pere != null) {
 			res += "  " + Integer.toString(this.getNiveau() + 1) + " HUSB @I" + this.pere.getIdentificateur() + "@\n";
@@ -144,9 +144,9 @@ public class Famille extends Entree{
 	public ArrayList<Individu> getEnfants() {
 		return enfants;
 	}
-
-	public void setEnfants(ArrayList<Individu> enfants) {
-		this.enfants = enfants;
+	
+	public void addEnfant(Individu enfant) {
+		this.enfants.add(enfant);
 	}
 
 	public Marriage getMariage() {
@@ -156,6 +156,7 @@ public class Famille extends Entree{
 	public void setMariage(Marriage mariage) {
 		this.mariage = mariage;
 	}
-
+	
+	
 
 }

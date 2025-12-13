@@ -1,6 +1,5 @@
 package fr.arbre.genealogie.shell.commands;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import fr.arbre.genealogie.entree.Famille;
@@ -20,10 +19,6 @@ public class Graph implements Command{
 		this.args = null;
 		this.description = "graph [profondeur] - Afficher le contenu de la base de donnée";
 		this.profondeur = -1;
-	}
-
-	public void setArgs(String args) {
-		this.args = args;
 	}
 
 	@Override
@@ -54,7 +49,6 @@ public class Graph implements Command{
 
 	private String dessiner(Famille current, int lvl) {
 		String res = "";
-		System.out.println("lvl = " + lvl);
 		if (current != null) {
 			if (lvl > 0) {
 				res += " | ".repeat(lvl);
@@ -74,8 +68,8 @@ public class Graph implements Command{
 			res += "\n";
 			if (profondeur == -1 || lvl <= profondeur) {					
 				for(Individu enfant : current.getEnfants()) {
-					if (enfant.getListe_famille_p().size() > 0) {					
-						for (Famille fam : enfant.getListe_famille_p()) {					
+					if (enfant.getListeFamilleParent().size() > 0) {					
+						for (Famille fam : enfant.getListeFamilleParent()) {					
 							res += "" + dessiner(fam, lvl + 1);
 						}
 					} else {
@@ -87,11 +81,18 @@ public class Graph implements Command{
 		return res;
 	}
 
-
-
 	@Override
 	public String getDescription() {
 		return this.description;
 	}
+	
+	public void setArgs(String args) {
+		this.args = args;
+	}
+	
+	public String getArgs() {
+		return args;
+	}
+
 
 }

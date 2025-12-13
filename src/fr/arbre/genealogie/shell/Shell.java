@@ -39,44 +39,44 @@ public class Shell {
 		Save save = new Save();
 		Graph graph = new Graph();
 
-		ArrayList<String> liste_cmd = new ArrayList<String>();
-		liste_cmd.add(h.getDescription());
-		liste_cmd.add(e.getDescription());
-		liste_cmd.add(importation.getDescription());
-		liste_cmd.add(g.getDescription());
-		liste_cmd.add(info.getDescription());
-		liste_cmd.add(child.getDescription());
-		liste_cmd.add(siblings.getDescription());
-		liste_cmd.add(married.getDescription());
-		liste_cmd.add(famc.getDescription());
-		liste_cmd.add(save.getDescription());
-		liste_cmd.add(graph.getDescription());
+		ArrayList<String> listeCmd = new ArrayList<String>();
+		listeCmd.add(h.getDescription());
+		listeCmd.add(e.getDescription());
+		listeCmd.add(importation.getDescription());
+		listeCmd.add(g.getDescription());
+		listeCmd.add(info.getDescription());
+		listeCmd.add(child.getDescription());
+		listeCmd.add(siblings.getDescription());
+		listeCmd.add(married.getDescription());
+		listeCmd.add(famc.getDescription());
+		listeCmd.add(save.getDescription());
+		listeCmd.add(graph.getDescription());
 
-		h.setListe_command(liste_cmd);
+		h.setListeCommands(listeCmd);
 
 		while (!this.quit) {
 			System.out.print("> ");
 			try {
 				String in = this.input();
 
-				int married_cmd_index = in.toLowerCase().indexOf(" married ");
-				if(married_cmd_index != -1) {
-					String concat_args = null;
-					if (married_cmd_index+8 < in.length()) {
-						concat_args = in.substring(0,married_cmd_index) + "|" + in.substring(married_cmd_index+9,in.length());
+				int marriedCmdIndex = in.toLowerCase().indexOf(" married ");
+				if(marriedCmdIndex != -1) {
+					String concatArgs = null;
+					if (marriedCmdIndex+8 < in.length()) {
+						concatArgs = in.substring(0,marriedCmdIndex) + "|" + in.substring(marriedCmdIndex+9,in.length());
 					}
-					married.setArgs(concat_args);
+					married.setArgs(concatArgs);
 					System.out.println(married.getResult());
 					continue;
 				}
 
 
-				int first_space = in.indexOf(" ");
+				int firstSpace = in.indexOf(" ");
 				String command;
 				String args;
-				if (first_space != -1) {
-					command = in.substring(0, first_space).trim();
-					args = in.substring(first_space+1);
+				if (firstSpace != -1) {
+					command = in.substring(0, firstSpace).trim();
+					args = in.substring(firstSpace+1);
 				} else {
 					command = in.trim();
 					args = null;
@@ -132,7 +132,7 @@ public class Shell {
 		}
 	}
 
-	public String input() throws IOException {
+	private String input() throws IOException {
 		String s = this.r.readLine();
 		return s;
 	}

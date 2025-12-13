@@ -18,7 +18,7 @@ public abstract class Event extends TagTemplate{
 	}
 
 	@Override
-	public void parser(String texte, int cpt_ligne) {
+	public void parser(String texte, int cptLigne) {
 		TagTemplate current = null;
 		ArrayList<String> lines = new ArrayList<String>(Arrays.asList(texte.split("\n")));
 		int i = 0;
@@ -30,16 +30,16 @@ public abstract class Event extends TagTemplate{
 				} else if(splited[1].equals(this.lieu.getTag())) {
 					current = this.lieu;
 				}
-				current.parser(lines.get(i).trim(), cpt_ligne+i);
+				current.parser(lines.get(i).trim(), cptLigne+i);
 				i++;
 			} else {
 				if (current != null) {
 					String bloc = lines.get(i++).trim() + "\n";
-					int cpt_ligne_debut_bloc = cpt_ligne+i-1;
+					int cptLigneDebutBloc = cptLigne+i-1;
 					while (i < lines.size() && !lines.get(i).trim().split(" ")[0].equals(Integer.toString(this.getNiveau() + 1))) {
 						bloc += lines.get(i++).trim() + "\n";
 					}
-					current.parser(bloc, cpt_ligne_debut_bloc);
+					current.parser(bloc, cptLigneDebutBloc);
 				} else {
 					i++;
 				}

@@ -22,7 +22,7 @@ public class Objet extends TagTemplate{
 	}
 
 	@Override
-	public void parser(String texte, int cpt_ligne) {
+	public void parser(String texte, int cptLigne) {
 		TagTemplate current = null;
 		ArrayList<String> lines = new ArrayList<String>(Arrays.asList(texte.split("\n")));
 		int i = 0;
@@ -36,12 +36,12 @@ public class Objet extends TagTemplate{
 				} else if(splited[1].equals(this.fichier.getTag())) {
 					current = this.fichier;
 				}
-				current.parser(lines.get(i).trim(), cpt_ligne+i);
+				current.parser(lines.get(i).trim(), cptLigne+i);
 				i++;
 			} else {
 				if (current != null) {
 					String bloc = lines.get(i++).trim() + "\n";
-					int cpt_ligne_debut_bloc = cpt_ligne+i-1;
+					int cpt_ligne_debut_bloc = cptLigne+i-1;
 					while (i < lines.size() && !lines.get(i).trim().split(" ")[0].equals(Integer.toString(this.getNiveau() + 1))) {
 						bloc += lines.get(i++).trim() + "\n";
 					}
@@ -69,6 +69,32 @@ public class Objet extends TagTemplate{
 				"  - Format : " + this.format + "\n" + 
 				"  - Lien : " + this.fichier + "\n";
 	}
+
+	public Format getFormat() {
+		return format;
+	}
+
+	public void setFormat(Format format) {
+		this.format = format;
+	}
+
+	public Title getTitre() {
+		return titre;
+	}
+
+	public void setTitre(Title titre) {
+		this.titre = titre;
+	}
+
+	public Fichier getFichier() {
+		return fichier;
+	}
+
+	public void setFichier(Fichier fichier) {
+		this.fichier = fichier;
+	}
+	
+	
 	
 	
 

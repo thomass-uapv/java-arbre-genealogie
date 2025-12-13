@@ -13,4 +13,6 @@ import fr.arbre.genealogie.exceptions.MissingEntreeException;
 public interface Command {
 	public String getResult() throws ArgsNullException, MissingEntreeException, InvalidParameterException, InvalidIdentifiantsException, FileNotFoundException, IncorrectSexeException, CycleException, IOException;
 	public String getDescription();
+	public void setArgs(String args);
+	public String getArgs();
 }

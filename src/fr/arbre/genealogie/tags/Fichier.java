@@ -15,7 +15,7 @@ public class Fichier extends TagTemplate{
 	}
 
 	@Override
-	public void parser(String texte, int cpt_ligne) {
+	public void parser(String texte, int cptLigne) {
 		ArrayList<String> splited = new ArrayList<String>(Arrays.asList(texte.split(" ")));
 
 		if (splited.size() > 2) {
@@ -25,6 +25,10 @@ public class Fichier extends TagTemplate{
 
 	public String getUrl() {
 		return url;
+	}
+	
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	@Override

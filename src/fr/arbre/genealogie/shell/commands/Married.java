@@ -19,16 +19,6 @@ public class Married implements Command{
 		this.description = "<Prénoms+Nom/ID> married <Prénoms+Nom/ID> - Renvoie vrai si les deux individus existent et sont mariés";
 	}
 
-	public void setArgs(String args) {
-		this.args.clear();
-		if (args != null) {
-			if (args.indexOf("|") > 0) {				
-				this.args.add(args.substring(0,args.indexOf("|")));
-			}
-			this.args.add(args.substring(args.indexOf("|")+1,args.length()));
-		}
-	}
-
 	@Override
 	public String getResult() throws ArgsNullException, InvalidIdentifiantsException{
 		if (args.size() < 2) {
@@ -64,6 +54,24 @@ public class Married implements Command{
 	@Override
 	public String getDescription() {
 		return this.description;
+	}
+	
+	public void setArgs(String args) {
+		this.args.clear();
+		if (args != null) {
+			if (args.indexOf("|") > 0) {				
+				this.args.add(args.substring(0,args.indexOf("|")));
+			}
+			this.args.add(args.substring(args.indexOf("|")+1,args.length()));
+		}
+	}
+	
+	public String getArgs(){
+		String res = this.args.get(0) + "|"; // La taille de args est toujours d'au moins 1
+		if (this.args.size() > 1) {
+			res += this.args.get(1);
+		}
+		return res;
 	}
 
 }

@@ -27,7 +27,7 @@ public class Import implements Command {
 	}
 
 	public String getResult() throws InvalidParameterException, InvalidIdentifiantsException, ArgsNullException, IncorrectSexeException, CycleException, IOException {
-		if (args == null) {
+		if (args == null || args.isBlank()) {
 			throw new ArgsNullException("Veuillez donner un argument");
 		}
 		System.out.println("Importation du fichier GED...");
@@ -37,8 +37,8 @@ public class Import implements Command {
 		if (Shell.getBddListInd().size() > 0) {
 			Shell.clearBddListInd();
 		}
-		p = new Parsing();
-		p.parser(args);
+		this.p = new Parsing();
+		this.p.parser(args);
 		this.checkReciprocalLink();
 		this.checkSexe();
 		for (Individu indi : Shell.getBddListInd()) {			
@@ -47,7 +47,7 @@ public class Import implements Command {
 		return "Importation réussie !";
 	}
 
-	public void checkCycle(Individu indi) throws CycleException{
+	private void checkCycle(Individu indi) throws CycleException{
 		if (indi.getFamille() != null) {
 			if (indi.getFamille().getMere().equals(indi) || indi.getFamille().getPere().equals(indi)) {
 				throw new CycleException("L'individu @I" + indi.getIdentificateur() + "@ est ancêtre de lui-même");
@@ -58,7 +58,7 @@ public class Import implements Command {
 		} 
 	}
 
-	public void checkSexe() throws IncorrectSexeException {
+	private void checkSexe() throws IncorrectSexeException {
 		for (Famille fam : Shell.getBddListFam()) {
 			if (fam.getMere().getSexe().getValue().equals("M")) {
 				throw new IncorrectSexeException("Sexe de la mère de la famille @F" + fam.getIdentificateur() + "@ incorrect.");
@@ -69,22 +69,22 @@ public class Import implements Command {
 
 	}
 
-	public void checkReciprocalLink() throws IncorrectSexeException {
+	private void checkReciprocalLink() throws IncorrectSexeException {
 		for(Individu indi : Shell.getBddListInd()) {
 			if (indi.getFamille() != null && !indi.getFamille().getEnfants().contains(indi)) {
 				MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @I" + indi.getIdentificateur() + "@ (Enfant) -> @F" + indi.getFamille().getIdentificateur() + "@ n'est pas réciproque. Création du lien réciproque...");
 				System.err.println(e.getMessage());
 				indi.getFamille().getEnfants().add(indi);
 			}
-			for (Famille fam : indi.getListe_famille_p()) {
-				String sexe_indi = indi.getSexe().getValue();
-				if (sexe_indi.equals("M")) {
+			for (Famille fam : indi.getListeFamilleParent()) {
+				String sexeIndi = indi.getSexe().getValue();
+				if (sexeIndi.equals("M")) {
 					if (fam.getPere() == null || !fam.getPere().equals(indi)) {
 						MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @I" + indi.getIdentificateur() + "@ (Père) -> @F" + fam.getIdentificateur() + "@ n'est pas réciproque. Création du lien réciproque...");
 						System.err.println(e.getMessage());
 						fam.setPere(indi);
 					}
-				} else if (sexe_indi.equals("F")) {
+				} else if (sexeIndi.equals("F")) {
 					if (fam.getMere() == null || !fam.getMere().equals(indi)) {
 						MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @I" + indi.getIdentificateur() + "@ (Mère) -> @F" + fam.getIdentificateur() + "@ n'est pas réciproque. Création du lien réciproque...");
 						System.err.println(e.getMessage());
@@ -103,18 +103,17 @@ public class Import implements Command {
 		}
 
 	for (Famille fam : Shell.getBddListFam()) {
-		if (fam.getPere() != null && !(fam.getPere().getListe_famille_p().contains(fam))) {
+		if (fam.getPere() != null && !(fam.getPere().getListeFamilleParent().contains(fam))) {
 			MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @F" + fam.getPere().getIdentificateur() + "@ -> @I" + fam.getIdentificateur() + "@ (Père) n'est pas réciproque. Création du lien réciproque...");
 			System.err.println(e.getMessage());
-			fam.getPere().getListe_famille_p().add(fam);
+			fam.getPere().getListeFamilleParent().add(fam);
 		}
-		if (fam.getMere() != null && !(fam.getMere().getListe_famille_p().contains(fam))) {
+		if (fam.getMere() != null && !(fam.getMere().getListeFamilleParent().contains(fam))) {
 			MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @F" + fam.getMere().getIdentificateur() + "@-> @I" + fam.getIdentificateur() + "@ (Mère) n'est pas réciproque. Création du lien réciproque...");
 			System.err.println(e.getMessage());
-			fam.getMere().getListe_famille_p().add(fam);
+			fam.getMere().getListeFamilleParent().add(fam);
 		}
 		for (Individu indi : fam.getEnfants()) {
-			//TODO
 			if (indi.getFamille() == null || !(indi.getFamille().equals(fam))) {
 				MissingReciprocalLinkException e = new MissingReciprocalLinkException("Le lien @F" + fam.getMere().getIdentificateur() + "@ -> @I" + fam.getIdentificateur() + "@ (Enfant) n'est pas réciproque. Création du lien réciproque...");
 				System.err.println(e.getMessage());
@@ -131,6 +130,10 @@ public String getDescription() {
 
 public void setArgs(String args) {
 	this.args = args;
+}
+
+public String getArgs() {
+	return args;
 }
 
 public Parsing getP() {

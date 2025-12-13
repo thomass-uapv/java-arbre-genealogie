@@ -15,15 +15,15 @@ import fr.arbre.genealogie.shell.Shell;
 import fr.arbre.genealogie.utils.Entree;
 
 public class Parsing{
-	private ArrayList<Integer> individus_indice;
-	private ArrayList<Integer> familles_indice;
-	private int cpt_ligne;
+	private ArrayList<Integer> individusIndice;
+	private ArrayList<Integer> famillesIndice;
+	private int cptLigne;
 
 
 	public Parsing() {
-		this.individus_indice = new ArrayList<Integer>();
-		this.familles_indice = new ArrayList<Integer>();
-		this.cpt_ligne = 0;
+		this.individusIndice = new ArrayList<Integer>();
+		this.famillesIndice = new ArrayList<Integer>();
+		this.cptLigne = 0;
 	}
 
 
@@ -33,7 +33,7 @@ public class Parsing{
 			throw new InvalidParameterException("Paramètre filepath vide.");
 		} else {
 			FileReader fr = null;
-			BufferedReader content_file = null;
+			BufferedReader contentFile = null;
 			try {
 				if (filepath.charAt(0) == '"'){
 					filepath = filepath.substring(1);
@@ -42,20 +42,20 @@ public class Parsing{
 					filepath = filepath.substring(0,filepath.length()-1);
 				}
 				fr = new FileReader(filepath);
-				content_file = new BufferedReader(fr);
+				contentFile = new BufferedReader(fr);
 
-				String line = content_file.readLine();
-				cpt_ligne++;
+				String line = contentFile.readLine();
+				cptLigne++;
 				Entree current = null;
 				while (!line.trim().equals("0 TRLR")) {
 					String[] elems;
 					if (line.trim().equals("0 HEAD")) {
-						line = content_file.readLine();
-						cpt_ligne++;
+						line = contentFile.readLine();
+						cptLigne++;
 						elems = line.trim().split(" ");
 						while (!elems[0].equals("0")) {
-							line = content_file.readLine();
-							cpt_ligne++;
+							line = contentFile.readLine();
+							cptLigne++;
 							elems = line.trim().split(" ");
 						}
 					}
@@ -70,8 +70,8 @@ public class Parsing{
 								current = new Individu(id);
 								Shell.addBddInd((Individu) current);
 							}
-							current.setLigne(cpt_ligne);
-							individus_indice.add(id);
+							current.setLigne(cptLigne);
+							individusIndice.add(id);
 						} else if (elems[1].substring(0,2).equals("@F")){
 							id = Integer.parseInt(line.trim().split(" ")[1].substring(2,line.trim().split(" ")[1].length()-1));
 							current = Shell.getBddFam(id);
@@ -79,41 +79,41 @@ public class Parsing{
 								current = new Famille(id);
 								Shell.addBddFam((Famille) current);
 							}
-							current.setLigne(cpt_ligne);
-							familles_indice.add(id);
+							current.setLigne(cptLigne);
+							famillesIndice.add(id);
 						}
-						line = content_file.readLine();
-						cpt_ligne++;
+						line = contentFile.readLine();
+						cptLigne++;
 					} else {
 						if (current != null) {							
 							String bloc = line.trim() + "\n";
-							int cpt_ligne_debut_bloc = cpt_ligne;
-							line = content_file.readLine();
-							cpt_ligne++;
+							int cptLigneDebutBloc = cptLigne;
+							line = contentFile.readLine();
+							cptLigne++;
 							while (!line.trim().split(" ")[0].equals("0")) {
 								bloc += line.trim() + "\n";
-								line = content_file.readLine();
-								cpt_ligne++;
+								line = contentFile.readLine();
+								cptLigne++;
 							}
-							current.parser(bloc, cpt_ligne_debut_bloc);
+							current.parser(bloc, cptLigneDebutBloc);
 						} else {
-							line = content_file.readLine();
-							cpt_ligne++;
+							line = contentFile.readLine();
+							cptLigne++;
 						}
 					}
 
 				}
 
-				Collections.sort(this.individus_indice);
-				Collections.sort(this.familles_indice);
+				Collections.sort(this.individusIndice);
+				Collections.sort(this.famillesIndice);
 
-				for (int i = 0; i < this.individus_indice.size(); i++) {
-					if (this.individus_indice.get(i) != i+1) {
+				for (int i = 0; i < this.individusIndice.size(); i++) {
+					if (this.individusIndice.get(i) != i+1) {
 						throw new InvalidIdentifiantsException("Identifiants d'individus incorrects.");
 					}
 				}
-				for (int i = 0; i < this.familles_indice.size(); i++) {
-					if (this.familles_indice.get(i) != i+1) {
+				for (int i = 0; i < this.famillesIndice.size(); i++) {
+					if (this.famillesIndice.get(i) != i+1) {
 						throw new InvalidIdentifiantsException("Identifiants de familles incorrects.");
 					}
 				}
@@ -122,7 +122,7 @@ public class Parsing{
 				e.printStackTrace();
 			} finally {
 					try {
-						content_file.close();
+						contentFile.close();
 						fr.close();
 					} catch (IOException e) {
 						e.printStackTrace();

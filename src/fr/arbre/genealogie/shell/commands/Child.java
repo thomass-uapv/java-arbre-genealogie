@@ -20,13 +20,9 @@ public class Child implements Command{
 		this.description = "child <Prénoms+Nom/ID> - Afficher des informations sur les enfants de l'individu";
 	}
 	
-	public void setArgs(String args) {
-		this.args = args;
-	}
-	
 	@Override
 	public String getResult() throws ArgsNullException, MissingEntreeException{
-		if (args == null) {
+		if (args == null || args.isBlank()) {
 			throw new ArgsNullException("Veuillez donner un argument");
 		}
 		Individu indi;
@@ -39,7 +35,7 @@ public class Child implements Command{
 		if (indi == null) {
 			throw new MissingEntreeException("Aucun individu n'a été trouvé !", -1);
 		}
-		ArrayList<Famille> liste_familles_parent = indi.getListe_famille_p();
+		ArrayList<Famille> liste_familles_parent = indi.getListeFamilleParent();
 		String res = "";
 		if (liste_familles_parent.size() > 0) {
 			for (Famille f : liste_familles_parent) {
@@ -56,6 +52,14 @@ public class Child implements Command{
 	@Override
 	public String getDescription() {
 		return this.description;
+	}
+	
+	public void setArgs(String args) {
+		this.args = args;
+	}
+	
+	public String getArgs() {
+		return args;
 	}
 
 }

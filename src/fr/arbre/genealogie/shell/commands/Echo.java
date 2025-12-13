@@ -11,11 +11,7 @@ public class Echo implements Command{
 		this.args = null;
 		this.description = "echo <Message> - Afficher un message";
 	}
-	
-	public void setArgs(String args) {
-		this.args = args;
-	}
-	
+		
 	@Override
 	public String getResult(){
 		return args;
@@ -25,5 +21,14 @@ public class Echo implements Command{
 	public String getDescription() {
 		return this.description;
 	}
+	
+	public void setArgs(String args) {
+		this.args = args;
+	}
+	
+	public String getArgs() {
+		return args;
+	}
+
 	
 }

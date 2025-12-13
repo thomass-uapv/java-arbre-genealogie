@@ -12,7 +12,7 @@ public abstract class TagTemplate {
 		this.ligne = -1;
 	}
 	
-	public abstract void parser(String texte, int cpt_ligne);
+	public abstract void parser(String texte, int cptLigne);
 	
 	public abstract String export();
 	

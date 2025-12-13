@@ -19,13 +19,9 @@ public class Siblings implements Command {
 		this.description = "siblings <Prénoms+Nom/ID> - Afficher des informations sur les frères et soeurs de l'individu";
 	}
 
-	public void setArgs(String args) {
-		this.args = args;
-	}
-
 	@Override
 	public String getResult() throws MissingEntreeException, ArgsNullException{
-		if (args == null) {
+		if (args == null || args.isBlank()) {
 			throw new ArgsNullException("Veuillez donner un argument");
 		}
 		Individu indi;
@@ -41,10 +37,10 @@ public class Siblings implements Command {
 		if (indi.getFamille() == null) {
 			throw new MissingEntreeException("Cet individu n'a pas de famille renseignée.", -1);
 		}
-		ArrayList<Individu> liste_frere_soeur = indi.getFamille().getEnfants();
+		ArrayList<Individu> listeFrereSoeur = indi.getFamille().getEnfants();
 		String res = "";
-		if (liste_frere_soeur.size() > 1) {
-			for (Individu sibling : liste_frere_soeur) {
+		if (listeFrereSoeur.size() > 1) {
+			for (Individu sibling : listeFrereSoeur) {
 				if (!sibling.equals(indi))
 				res += sibling.toString() + "\n ---- \n";
 			}
@@ -59,4 +55,11 @@ public class Siblings implements Command {
 		return this.description;
 	}
 
+	public void setArgs(String args) {
+		this.args = args;
+	}
+	
+	public String getArgs() {
+		return args;
+	}
 }

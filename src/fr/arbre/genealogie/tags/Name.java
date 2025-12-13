@@ -16,7 +16,7 @@ public class Name extends TagTemplate{
 	}
 
 	@Override
-	public void parser(String texte, int cpt_ligne) {
+	public void parser(String texte, int cptLigne) {
 		ArrayList<String> splited = new ArrayList<String>(Arrays.asList(texte.split(" ")));
 		
 		if (splited.size() > 2) {
@@ -71,8 +71,8 @@ public class Name extends TagTemplate{
 		return prenoms;
 	}
 
-	public void setPrenoms(ArrayList<String> prenoms) {
-		this.prenoms = prenoms;
+	public void addPrenoms(String prenom) {
+		this.prenoms.add(prenom);
 	}
 
 }

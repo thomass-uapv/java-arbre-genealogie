@@ -13,15 +13,15 @@ import fr.arbre.genealogie.tags.Sex;
 import fr.arbre.genealogie.utils.Entree;
 import fr.arbre.genealogie.utils.TagTemplate;
 
-public class Individu extends Entree{
+public class Individu extends Entree {
 
 	private Name nom;
 	private Sex sexe;
 	private Birth naissance;
 	private Death deces;
 	private Famille famille;
-	private ArrayList<Famille> liste_famille_p;
-	private ArrayList<Objet> liste_objet;
+	private ArrayList<Famille> listeFamilleParent;
+	private ArrayList<Objet> listeObjet;
 
 	public Individu(int id) {
 		super(0, "INDI", id);
@@ -30,12 +30,12 @@ public class Individu extends Entree{
 		this.naissance = new Birth();
 		this.deces = new Death();
 		this.famille = null;
-		this.liste_famille_p = new ArrayList<Famille>();
-		this.liste_objet = new ArrayList<Objet>();
+		this.listeFamilleParent = new ArrayList<Famille>();
+		this.listeObjet = new ArrayList<Objet>();
 	}
 
 	@Override
-	public void parser(String texte, int cpt_ligne) {
+	public void parser(String texte, int cptLigne) {
 		TagTemplate current = null;
 		ArrayList<String> lines = new ArrayList<String>(Arrays.asList(texte.split("\n")));
 		int i = 0;
@@ -45,14 +45,15 @@ public class Individu extends Entree{
 				current = null;
 				if (splited[1].equals(this.nom.getTag())) {
 					current = this.nom;
-				} else if(splited[1].equals(this.sexe.getTag())) {
+				} else if (splited[1].equals(this.sexe.getTag())) {
 					current = this.sexe;
-				} else if (splited[1].equals("FAMC") || splited[1].equals("FAMS")){
-					int id = Integer.parseInt(splited[2].substring(2,splited[2].length()-1));
+				} else if (splited[1].equals("FAMC") || splited[1].equals("FAMS")) {
+					int id = Integer.parseInt(splited[2].substring(2, splited[2].length() - 1));
 					current = Shell.getBddFam(id);
 					if (current == null) {
-						MissingEntreeException e = new MissingEntreeException("Famille manquante, création de la famille...", cpt_ligne+i);
-						System.err.println(e.getMessage()); //TODO A verifier
+						MissingEntreeException e = new MissingEntreeException(
+								"Famille manquante, création de la famille...", cptLigne + i);
+						System.err.println(e.getMessage());
 						current = new Famille(id);
 						Shell.addBddFam((Famille) current);
 					}
@@ -61,7 +62,7 @@ public class Individu extends Entree{
 							this.famille = (Famille) current;
 						}
 					} else if (splited[1].equals("FAMS")) {
-						this.liste_famille_p.add((Famille) current);
+						this.listeFamilleParent.add((Famille) current);
 					}
 				} else if (splited[1].equals(this.naissance.getTag())) {
 					current = this.naissance;
@@ -69,21 +70,22 @@ public class Individu extends Entree{
 					current = this.deces;
 				} else if (splited[1].equals("OBJE")) {
 					current = new Objet();
-					this.liste_objet.add((Objet) current);
+					this.listeObjet.add((Objet) current);
 				}
 				if (!(splited[1].equals("FAMC") || splited[1].equals("FAMS"))) {
-					current.setLigne(cpt_ligne);
+					current.setLigne(cptLigne + i);
 				}
-				current.parser(lines.get(i).trim(), cpt_ligne+i);
+				current.parser(lines.get(i).trim(), cptLigne + i);
 				i++;
 			} else {
-				if (current != null) {					
+				if (current != null) {
 					String bloc = lines.get(i++).trim() + "\n";
-					int cpt_ligne_debut_bloc = cpt_ligne+i-1;
-					while (i < lines.size() && !lines.get(i).trim().split(" ")[0].equals(Integer.toString(this.getNiveau() + 1))) {
+					int cptLigneDebutBloc = cptLigne + i - 1;
+					while (i < lines.size()
+							&& !lines.get(i).trim().split(" ")[0].equals(Integer.toString(this.getNiveau() + 1))) {
 						bloc += lines.get(i++).trim() + "\n";
 					}
-					current.parser(bloc, cpt_ligne_debut_bloc);
+					current.parser(bloc, cptLigneDebutBloc);
 				} else {
 					i++;
 				}
@@ -98,7 +100,7 @@ public class Individu extends Entree{
 
 	public ArrayList<Individu> marriedWith() {
 		ArrayList<Individu> marriedWith = new ArrayList<Individu>();
-		for (Famille fam : this.liste_famille_p) {
+		for (Famille fam : this.listeFamilleParent) {
 			ArrayList<Individu> marriedFamille = fam.whoMarried();
 			if (marriedFamille.get(0).equals(this)) {
 				marriedWith.add(marriedFamille.get(1));
@@ -114,54 +116,48 @@ public class Individu extends Entree{
 	public String toString() {
 		String res;
 		if (famille == null) {
-			res = "Prénoms & Nom : " + this.nom.toString() + "\n" + 
-					"Sexe : " + sexe.toString() + "\n" +
-					"Naissance : \n  " + this.naissance.toString() + "\n" +
-					"Décès : \n  " + this.deces.toString() + "\n" +
-					"Famille : UNKNOWN \n" + 
-					"Familles où l'individu est parent :\n";
+			res = "Prénoms & Nom : " + this.nom.toString() + "\n" + "Sexe : " + sexe.toString() + "\n"
+					+ "Naissance : \n  " + this.naissance.toString() + "\n" + "Décès : \n  " + this.deces.toString()
+					+ "\n" + "Famille : UNKNOWN \n" + "Familles où l'individu est parent :\n";
 		} else {
-			res = "Prénoms & Nom : " + nom.toString() + "\n" + 
-					"Sexe : " + sexe.toString() + "\n" +
-					"Naissance : \n  " + this.naissance.toString() + "\n" +
-					"Décès : \n  " + this.deces.toString() + "\n" +
-					"Famille : " + Integer.toString(famille.getIdentificateur()) + "\n" + 
-					"Familles où l'individu est parent :\n";
+			res = "Prénoms & Nom : " + nom.toString() + "\n" + "Sexe : " + sexe.toString() + "\n" + "Naissance : \n  "
+					+ this.naissance.toString() + "\n" + "Décès : \n  " + this.deces.toString() + "\n" + "Famille : "
+					+ Integer.toString(famille.getIdentificateur()) + "\n" + "Familles où l'individu est parent :\n";
 		}
-		if (liste_famille_p.size() == 0) {
+		if (listeFamilleParent.size() == 0) {
 			res += "   AUCUNE \n";
-		} else {			
-			for(Famille fam : liste_famille_p) {
+		} else {
+			for (Famille fam : listeFamilleParent) {
 				res += " - @F" + Integer.toString(fam.getIdentificateur()) + "@\n";
 			}
 		}
-		
+
 		res += "Liste des documents associé à cette personne :\n";
-		if (liste_objet.size() == 0) {
+		if (listeObjet.size() == 0) {
 			res += "   AUCUN \n";
 		} else {
-			for (int i = 0; i < liste_objet.size(); i++) {
-				res += " " + i+1 + ". " + liste_objet.get(i) +"\n";
+			for (int i = 0; i < listeObjet.size(); i++) {
+				res += " " + i + 1 + ". " + listeObjet.get(i) + "\n";
 			}
 		}
 		return res;
 	}
-	
+
 	@Override
 	public String export() {
-		String res = this.getNiveau() + " @I" + this.getIdentificateur() + "@ " + this.getTag() + "\n" +
-					this.nom.export() + "\n" +
-					this.sexe.export() + "\n" +
-					this.naissance.export() + "\n" +
-					this.deces.export() + "\n";
-		
+		String res = this.getNiveau() + " @I" + this.getIdentificateur() + "@ " + this.getTag() + "\n"
+				+ this.nom.export() + "\n" + this.sexe.export() + "\n" + this.naissance.export() + "\n"
+				+ this.deces.export() + "\n";
+
 		if (this.famille != null) {
-			res += "  ".repeat(this.getNiveau() + 1) + Integer.toString(this.getNiveau() + 1) + " " + famille.getTag() + " @F" + famille.getIdentificateur() + "@\n";
+			res += "  ".repeat(this.getNiveau() + 1) + Integer.toString(this.getNiveau() + 1) + " " + famille.getTag()
+					+ "C @F" + famille.getIdentificateur() + "@\n";
 		}
-		for (Famille fam : this.liste_famille_p) {
-			res += "  ".repeat(this.getNiveau() + 1) + Integer.toString(this.getNiveau() + 1) + " " + fam.getTag() + " @F" + fam.getIdentificateur() + "@\n";
+		for (Famille fam : this.listeFamilleParent) {
+			res += "  ".repeat(this.getNiveau() + 1) + Integer.toString(this.getNiveau() + 1) + " " + fam.getTag()
+					+ "S @F" + fam.getIdentificateur() + "@\n";
 		}
-		for (Objet obj : liste_objet) {
+		for (Objet obj : listeObjet) {
 			res += obj.export() + "\n";
 		}
 		return res + "\n";
@@ -207,20 +203,20 @@ public class Individu extends Entree{
 		this.famille = famille;
 	}
 
-	public ArrayList<Famille> getListe_famille_p() {
-		return liste_famille_p;
+	public ArrayList<Famille> getListeFamilleParent() {
+		return listeFamilleParent;
 	}
 
-	public void setListe_famille_p(ArrayList<Famille> liste_famille_p) {
-		this.liste_famille_p = liste_famille_p;
+	public void addListeFamilleParent(Famille fam) {
+		this.listeFamilleParent.add(fam);
 	}
 
-	public ArrayList<Objet> getListe_objet() {
-		return liste_objet;
+	public ArrayList<Objet> getListeObjet() {
+		return listeObjet;
 	}
 
-	public void setListe_objet(ArrayList<Objet> liste_objet) {
-		this.liste_objet = liste_objet;
+	public void addListeObjet(Objet objet) {
+		this.listeObjet.add(objet);
 	}
 
 }

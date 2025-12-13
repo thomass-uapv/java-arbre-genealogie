@@ -18,13 +18,9 @@ public class Famc implements Command{
 		this.description = "famc <Prénoms+Nom/ID> - Afficher toutes les informations de la famille de l'individu";
 	}
 	
-	public void setArgs(String args) {
-		this.args = args;
-	}
-	
 	@Override
 	public String getResult() throws ArgsNullException, MissingEntreeException{
-		if (args == null) {
+		if (args == null || args.isBlank()) {
 			throw new ArgsNullException("Veuillez donner un argument");
 		}
 		Individu indi;
@@ -49,5 +45,14 @@ public class Famc implements Command{
 	public String getDescription() {
 		return this.description;
 	}
+	
+	public void setArgs(String args) {
+		this.args = args;
+	}
+	
+	public String getArgs() {
+		return args;
+	}
+
 
 }

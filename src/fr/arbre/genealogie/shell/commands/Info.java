@@ -16,14 +16,10 @@ public class Info implements Command{
 		this.args = null;
 		this.description = "info <Prénoms+Nom/ID> - Afficher des informations sur l'individu";
 	}
-	
-	public void setArgs(String args) {
-		this.args = args;
-	}
-	
+		
 	@Override
 	public String getResult() throws ArgsNullException, MissingEntreeException{
-		if (args == null) {
+		if (args == null || args.isBlank()) {
 			throw new ArgsNullException("Veuillez donner un argument");
 		}
 		Individu indi;
@@ -42,6 +38,14 @@ public class Info implements Command{
 	@Override
 	public String getDescription() {
 		return this.description;
+	}
+	
+	public void setArgs(String args) {
+		this.args = args;
+	}
+	
+	public String getArgs() {
+		return args;
 	}
 
 }

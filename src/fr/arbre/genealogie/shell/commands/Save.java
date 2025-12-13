@@ -15,16 +15,13 @@ public class Save implements Command{
 		this.args = null;
 		this.description = "export <path> - Exporter la base de donnée dans un fichier GED (Alias : save)";
 	}
-	
-	public void setArgs(String args) {
-		this.args = args;
-	}
-	
+		
 	@Override
 	public String getResult() throws IOException, ArgsNullException{
-		if (args == null) {
+		if (args == null || args.isBlank()) {
 			this.args = "output.ged";
 		}
+		System.out.println(args);
 		Export exp = new Export(args);
 		String path = exp.export();
 		return "Sauvegarde effectuée à l'adresse : " + path;
@@ -33,6 +30,14 @@ public class Save implements Command{
 	@Override
 	public String getDescription() {
 		return this.description;
+	}
+	
+	public void setArgs(String args) {
+		this.args = args;
+	}
+	
+	public String getArgs() {
+		return args;
 	}
 	
 }
