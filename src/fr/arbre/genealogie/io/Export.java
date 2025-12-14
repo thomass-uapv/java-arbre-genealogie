@@ -30,7 +30,7 @@ public class Export {
 
 	/**
 	 * Constructeur de la classe Export.
-	 * @param path : correspond au chemin/fichier où exporter la base de donnée.
+	 * @param path : correspond au chemin/fichier où exporter la base de données.
 	 * @throws IOException
 	 */
 	public Export(String path) throws IOException {
@@ -46,7 +46,7 @@ public class Export {
 	}
 
 	/**
-	 * Ecris dans le fichier en appelant les méthodes d'exportation de tous les objets de la base.
+	 * Ecrit dans le fichier en appelant les méthodes d'exportation de tous les objets de la base.
 	 * @return String correspondant au chemin d'accès où a été sauvegardé le fichier.
 	 * @throws IOException
 	 */
@@ -69,3 +69,4 @@ public class Export {
 	}
 
 }
+
