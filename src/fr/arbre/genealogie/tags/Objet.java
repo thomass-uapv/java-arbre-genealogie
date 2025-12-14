@@ -95,7 +95,7 @@ public class Objet extends TagTemplate{
 	}
 
 	/**
-	 * Défini le format de l'objet.
+	 * Définit le format de l'objet.
 	 * @param format : le format à définir
 	 */
 	public void setFormat(Format format) {
@@ -111,8 +111,8 @@ public class Objet extends TagTemplate{
 	}
 
 	/**
-	 * Défini le titre de l'objet.
-	 * @param titre : défini le titre de l'objet.
+	 * Définit le titre de l'objet.
+	 * @param titre : définit le titre de l'objet.
 	 */
 	public void setTitre(Title titre) {
 		this.titre = titre;
@@ -127,7 +127,7 @@ public class Objet extends TagTemplate{
 	}
 
 	/**
-	 * Défini le lien du fichier de l'objet.
+	 * Définit le lien du fichier de l'objet.
 	 * @param fichier : le lien du fichier à définir.
 	 */
 	public void setFichier(Fichier fichier) {
@@ -139,3 +139,4 @@ public class Objet extends TagTemplate{
 
 
 }
+
