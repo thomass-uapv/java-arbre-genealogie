@@ -11,7 +11,7 @@ import fr.arbre.genealogie.utils.TagTemplate;
 public class Format extends TagTemplate{
 
 	/**
-	 * Contient la valeur du format.
+	 * Contient la valeur du Format.
 	 */
 	private String f;
 
@@ -34,15 +34,15 @@ public class Format extends TagTemplate{
 	}
 
 	/**
-	 * Renvoie la valeur du format.
-	 * @return la valeur du format
+	 * Renvoie la valeur du Format.
+	 * @return la valeur du Format
 	 */
 	public String getF() {
 		return f;
 	}
 
 	/**
-	 * Défini la valeur du format.
+	 * Défini la valeur du Format.
 	 * @param f
 	 */
 	public void setF(String f) {
@@ -60,3 +60,4 @@ public class Format extends TagTemplate{
 	}
 
 }
+
