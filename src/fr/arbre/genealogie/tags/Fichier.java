@@ -16,7 +16,7 @@ public class Fichier extends TagTemplate{
 	private String url;
 
 	/**
-	 * Constructeur de la classe Fichier. Défini la valeur de l'url à UNKNOWN.
+	 * Constructeur de la classe Fichier. Définit la valeur de l'url à UNKNOWN.
 	 */
 	public Fichier( ) {
 		super(2, "FILE");
@@ -41,7 +41,7 @@ public class Fichier extends TagTemplate{
 	}
 
 	/**
-	 * Défini le lien du fichier
+	 * Définit le lien du fichier
 	 * @param url
 	 */
 	public void setUrl(String url) {
@@ -59,3 +59,4 @@ public class Fichier extends TagTemplate{
 	}
 
 }
+
