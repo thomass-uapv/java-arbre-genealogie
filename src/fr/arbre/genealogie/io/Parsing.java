@@ -45,7 +45,7 @@ public class Parsing{
 	}
 
 	/**
-	 * Méthode de parsing du Parser général. C'est cette méthode qui va ouvrir le fichier, et faire la lecture du niveau le plus élevé (0) du fichier.
+	 * Méthode de Parsing du Parser général. C'est cette méthode qui va ouvrir le fichier, et faire la lecture du niveau le plus élevé (0) du fichier.
 	 * @param filepath : Le chemin d'accès avec le nom du fichier GED qu'on veut utiliser.
 	 * @throws InvalidParameterException
 	 * @throws InvalidIdentifiantsException
@@ -163,3 +163,4 @@ public class Parsing{
 	}
 
 }
+
