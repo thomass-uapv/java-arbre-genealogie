@@ -49,7 +49,7 @@ public abstract class Command {
 	}
 
 	/**
-	 * Défini les arguments pour la commande.
+	 * Définit les arguments pour la commande.
 	 * @param args
 	 */
 	public void setArgs(String args) {
@@ -64,3 +64,4 @@ public abstract class Command {
 		return args;
 	}
 }
+
