@@ -69,7 +69,7 @@ public class Married extends Command{
 
 	@Override
 	public String getArgs(){
-		String res = this.arguments.get(0) + "|"; // La taille de arguments est toujours d'au moins 1
+		String res = this.arguments.get(0) + "|"; // La taille des arguments est toujours d'au moins un
 		if (this.arguments.size() > 1) {
 			res += this.arguments.get(1);
 		}
@@ -77,3 +77,4 @@ public class Married extends Command{
 	}
 
 }
+
