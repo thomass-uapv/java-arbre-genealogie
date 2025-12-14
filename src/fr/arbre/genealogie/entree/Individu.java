@@ -14,48 +14,48 @@ import fr.arbre.genealogie.utils.Entree;
 import fr.arbre.genealogie.utils.TagTemplate;
 
 /**
- * Un objet qui associe différentes informations d'un même individu. Un Individu hérite de Entree.
+ * Un objet qui associe différentes informations d'un même Individu. Un Individu hérite de Entree.
  * @see Entree
  */
 public class Individu extends Entree {
 
 	/**
-	 * Le nom de l'individu.
+	 * Le nom de l'Individu.
 	 */
 	private Name nom;
 
 	/**
-	 * Le sexe de l'individu.
+	 * Le sexe de l'Individu.
 	 */
 	private Sex sexe;
 
 	/**
-	 * La naissance de l'individu.
+	 * La naissance de l'Individu.
 	 */
 	private Birth naissance;
 
 	/**
-	 * Le décès de l'individu.
+	 * Le décès de l'Individu.
 	 */
 	private Death deces;
 
 	/**
-	 * La famille où l'individu est enfant.
+	 * La Famille où l'Individu est enfant.
 	 */
 	private Famille famille;
 
 	/**
-	 * La liste des familles où l'individu est parent.
+	 * La liste des Familles où l'Individu est parent.
 	 */
 	private ArrayList<Famille> listeFamilleParent;
 
 	/**
-	 * La liste des documents associés à l'individu.
+	 * La liste des documents associés à l'Individu.
 	 */
 	private ArrayList<Objet> listeObjet;
 
 	/**
-	 * Constructeur de le classe Individu. On instancie tous les attributs de l'individu.
+	 * Constructeur de la classe Individu. On instancie tous les attributs de l'individu.
 	 * @param id
 	 */
 	public Individu(int id) {
@@ -139,8 +139,8 @@ public class Individu extends Entree {
 	}
 
 	/**
-	 * Renvoie la liste des individus avec qui l'individu est marié.
-	 * @return une collection des individus avec qui l'individu est marié.
+	 * Renvoie la liste des individus avec qui l'Individu est marié.
+	 * @return une collection des individus avec qui l'Individu est marié.
 	 */
 	public ArrayList<Individu> marriedWith() {
 		ArrayList<Individu> marriedWith = new ArrayList<Individu>();
@@ -208,15 +208,15 @@ public class Individu extends Entree {
 	}
 
 	/**
-	 * Renvoie le nom de l'individu.
-	 * @return le nom de l'individu.
+	 * Renvoie le nom de l'Individu.
+	 * @return le nom de l'Individu.
 	 */
 	public Name getNom() {
 		return nom;
 	}
 
 	/**
-	 * Défini le nom de l'individu.
+	 * Définit le nom de l'Individu.
 	 * @param nom
 	 */
 	public void setNom(Name nom) {
@@ -224,15 +224,15 @@ public class Individu extends Entree {
 	}
 
 	/**
-	 * Renvoie le sexe de l'individu.
-	 * @return le sexe de l'individu.
+	 * Renvoie le sexe de l'Individu.
+	 * @return le sexe de l'Individu.
 	 */
 	public Sex getSexe() {
 		return sexe;
 	}
 
 	/**
-	 * Défini le sexe de l'individu.
+	 * Définit le sexe de l'Individu.
 	 * @param sexe
 	 */
 	public void setSexe(Sex sexe) {
@@ -240,15 +240,15 @@ public class Individu extends Entree {
 	}
 
 	/**
-	 * Renvoie la naissance de l'individu.
-	 * @return la naissance de l'individu.
+	 * Renvoie la naissance de l'Individu.
+	 * @return la naissance de l'Individu.
 	 */
 	public Birth getNaissance() {
 		return naissance;
 	}
 
 	/**
-	 * Défini la naissance de l'individu.
+	 * Définit la naissance de l'Individu.
 	 * @param naissance
 	 */
 	public void setNaissance(Birth naissance) {
@@ -256,14 +256,14 @@ public class Individu extends Entree {
 	}
 
 	/**
-	 * Renvoie le décès de l'individu.
-	 * @return le décès de l'individu.
+	 * Renvoie le décès de l'Individu.
+	 * @return le décès de l'Individu.
 	 */
 	public Death getDeces() {
 		return deces;
 	}
 
-	/** Définie le décès de l'individu (voir classe Death).
+	/** Définit le décès de l'Individu (voir classe Death).
 	 * @param deces
 	 */
 	public void setDeces(Death deces) {
@@ -271,15 +271,15 @@ public class Individu extends Entree {
 	}
 
 	/**
-	 * Renvoie la famille où l'individu est enfant.
-	 * @return le famille où l'individu est enfant.
+	 * Renvoie la famille où l'Individu est enfant.
+	 * @return le famille où l'Individu est enfant.
 	 */
 	public Famille getFamille() {
 		return famille;
 	}
 
 	/**
-	 * Défini la famille où l'individu est enfant.
+	 * Définit la famille où l'Individu est enfant.
 	 * @param famille
 	 */
 	public void setFamille(Famille famille) {
@@ -287,15 +287,15 @@ public class Individu extends Entree {
 	}
 
 	/**
-	 * Renvoie la liste des familles où l'individu est parent.
-	 * @return la liste des familles où l'individu est parent.
+	 * Renvoie la liste des familles où l'Individu est parent.
+	 * @return la liste des familles où l'Individu est parent.
 	 */
 	public ArrayList<Famille> getListeFamilleParent() {
 		return listeFamilleParent;
 	}
 
 	/**
-	 * Ajoute une famille où l'individu est parent.
+	 * Ajoute une famille où l'Individu est parent.
 	 * @param fam
 	 */
 	public void addListeFamilleParent(Famille fam) {
@@ -303,15 +303,15 @@ public class Individu extends Entree {
 	}
 
 	/**
-	 * Renvoie la liste des documents associés à l'individu.
-	 * @return la liste des documents associés à l'individu.
+	 * Renvoie la liste des documents associés à l'Individu.
+	 * @return la liste des documents associés à l'Individu.
 	 */
 	public ArrayList<Objet> getListeObjet() {
 		return listeObjet;
 	}
 
 	/**
-	 * Ajoute un document associé à l'individu.
+	 * Ajoute un document associé à l'Individu.
 	 * @param objet
 	 */
 	public void addListeObjet(Objet objet) {
@@ -319,3 +319,4 @@ public class Individu extends Entree {
 	}
 
 }
+
