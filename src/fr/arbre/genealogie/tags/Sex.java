@@ -52,7 +52,7 @@ public class Sex extends TagTemplate{
 	}
 
 	/**
-	 * Défini la valeur du sexe. Doit être "M" ou "F". Si une Exception est retournée, alors "UNKNOWN" est défini.
+	 * Définit la valeur du sexe. Doit être "M" ou "F". Si une Exception est retournée, alors "UNKNOWN" est défini.
 	 * @param sexe
 	 * @throws IncorrectSexeException
 	 */
@@ -68,3 +68,4 @@ public class Sex extends TagTemplate{
 
 
 }
+
