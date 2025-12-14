@@ -31,7 +31,7 @@ public abstract class Entree extends TagTemplate{
 	}
 
 	/**
-	 * Défini l'identificateur du Tag
+	 * Définit l'identificateur du Tag
 	 * @param identificateur
 	 */
 	public void setIdentificateur(int identificateur) {
@@ -39,3 +39,4 @@ public abstract class Entree extends TagTemplate{
 	}
 
 }
+
