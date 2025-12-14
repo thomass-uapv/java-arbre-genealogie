@@ -52,7 +52,7 @@ public abstract class EventValue extends TagTemplate {
 	}
 
 	/**
-	 * Défini la valeur du TAG.
+	 * Définit la valeur du TAG.
 	 * @param value
 	 */
 	public void setEventValue(String value) {
@@ -60,3 +60,4 @@ public abstract class EventValue extends TagTemplate {
 	}
 
 }
+
