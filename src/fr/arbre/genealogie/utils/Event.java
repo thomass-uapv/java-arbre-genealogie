@@ -82,7 +82,7 @@ public abstract class Event extends TagTemplate{
 	}
 
 	/**
-	 * Défini l'objet Date
+	 * Définit l'objet Date
 	 */
 	public void setDate(Date date) {
 		this.date = date;
@@ -97,10 +97,11 @@ public abstract class Event extends TagTemplate{
 	}
 
 	/**
-	 * Défini l'objet Lieu
+	 * Définit l'objet Lieu
 	 */
 	public void setLieu(Place lieu) {
 		this.lieu = lieu;
 	}
 
 }
+
