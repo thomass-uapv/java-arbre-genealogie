@@ -3,7 +3,7 @@ package fr.arbre.genealogie.shell.commands;
 import java.util.ArrayList;
 
 import fr.arbre.genealogie.entree.Individu;
-import fr.arbre.genealogie.exceptions.ArgsNullException;
+import fr.arbre.genealogie.exceptions.ArgsException;
 import fr.arbre.genealogie.exceptions.MissingEntreeException;
 import fr.arbre.genealogie.shell.Shell;
 import fr.arbre.genealogie.utils.Command;
@@ -20,9 +20,9 @@ public class Siblings implements Command {
 	}
 
 	@Override
-	public String getResult() throws MissingEntreeException, ArgsNullException{
+	public String getResult() throws MissingEntreeException, ArgsException{
 		if (args == null || args.isBlank()) {
-			throw new ArgsNullException("Veuillez donner un argument");
+			throw new ArgsException("Veuillez donner un argument");
 		}
 		Individu indi;
 		try {

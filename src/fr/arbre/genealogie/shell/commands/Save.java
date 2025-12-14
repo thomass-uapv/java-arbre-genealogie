@@ -2,7 +2,7 @@ package fr.arbre.genealogie.shell.commands;
 
 import java.io.IOException;
 
-import fr.arbre.genealogie.exceptions.ArgsNullException;
+import fr.arbre.genealogie.exceptions.ArgsException;
 import fr.arbre.genealogie.io.Export;
 import fr.arbre.genealogie.utils.Command;
 
@@ -17,7 +17,7 @@ public class Save implements Command{
 	}
 		
 	@Override
-	public String getResult() throws IOException, ArgsNullException{
+	public String getResult() throws IOException, ArgsException{
 		if (args == null || args.isBlank()) {
 			this.args = "output.ged";
 		}

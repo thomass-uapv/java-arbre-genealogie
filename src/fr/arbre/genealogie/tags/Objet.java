@@ -36,7 +36,9 @@ public class Objet extends TagTemplate{
 				} else if(splited[1].equals(this.fichier.getTag())) {
 					current = this.fichier;
 				}
-				current.parser(lines.get(i).trim(), cptLigne+i);
+				if (current != null) {
+					current.parser(lines.get(i).trim(), cptLigne+i);
+				}					
 				i++;
 			} else {
 				if (current != null) {

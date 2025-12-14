@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import fr.arbre.genealogie.entree.Famille;
 import fr.arbre.genealogie.entree.Individu;
-import fr.arbre.genealogie.exceptions.ArgsNullException;
+import fr.arbre.genealogie.exceptions.ArgsException;
 import fr.arbre.genealogie.shell.Shell;
 import fr.arbre.genealogie.utils.Command;
 
@@ -22,12 +22,12 @@ public class Graph implements Command{
 	}
 
 	@Override
-	public String getResult() throws ArgsNullException {
+	public String getResult() throws ArgsException {
 		if (args != null) {			
 			try{
 				this.profondeur = Integer.parseInt(args);
 			} catch (NumberFormatException e) {
-				throw new ArgsNullException("Argument donné incorrect.");
+				throw new ArgsException("Argument donné incorrect.");
 			}
 		}
 

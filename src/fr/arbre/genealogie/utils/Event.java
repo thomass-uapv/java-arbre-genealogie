@@ -30,7 +30,9 @@ public abstract class Event extends TagTemplate{
 				} else if(splited[1].equals(this.lieu.getTag())) {
 					current = this.lieu;
 				}
-				current.parser(lines.get(i).trim(), cptLigne+i);
+				if (current != null) {					
+					current.parser(lines.get(i).trim(), cptLigne+i);
+				}
 				i++;
 			} else {
 				if (current != null) {

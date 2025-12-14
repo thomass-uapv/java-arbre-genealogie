@@ -3,7 +3,7 @@ package fr.arbre.genealogie.shell.commands;
 import java.util.ArrayList;
 
 import fr.arbre.genealogie.entree.Individu;
-import fr.arbre.genealogie.exceptions.ArgsNullException;
+import fr.arbre.genealogie.exceptions.ArgsException;
 import fr.arbre.genealogie.exceptions.InvalidIdentifiantsException;
 import fr.arbre.genealogie.shell.Shell;
 import fr.arbre.genealogie.utils.Command;
@@ -20,9 +20,9 @@ public class Married implements Command{
 	}
 
 	@Override
-	public String getResult() throws ArgsNullException, InvalidIdentifiantsException{
+	public String getResult() throws ArgsException, InvalidIdentifiantsException{
 		if (args.size() < 2) {
-			throw new ArgsNullException("Il manque au moins 1 argument");
+			throw new ArgsException("Il manque au moins 1 argument");
 		}
 		Individu indi1;
 		Individu indi2;

@@ -9,6 +9,7 @@ import java.util.Collections;
 
 import fr.arbre.genealogie.entree.Famille;
 import fr.arbre.genealogie.entree.Individu;
+import fr.arbre.genealogie.exceptions.ESException;
 import fr.arbre.genealogie.exceptions.InvalidIdentifiantsException;
 import fr.arbre.genealogie.exceptions.InvalidParameterException;
 import fr.arbre.genealogie.shell.Shell;
@@ -28,7 +29,7 @@ public class Parsing{
 
 
 
-	public void parser(String filepath) throws InvalidParameterException, InvalidIdentifiantsException, FileNotFoundException {
+	public void parser(String filepath) throws InvalidParameterException, InvalidIdentifiantsException, FileNotFoundException, ESException {
 		if (filepath.isEmpty()) {
 			throw new InvalidParameterException("Paramètre filepath vide.");
 		} else {
@@ -119,13 +120,19 @@ public class Parsing{
 				}
 			
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.err.println(e.getMessage());
+				throw new ESException("L'importation a écouhé");
 			} finally {
 					try {
-						contentFile.close();
-						fr.close();
+						if (contentFile != null) {							
+							contentFile.close();
+						}
+						if (fr != null) {							
+							fr.close();
+						}
 					} catch (IOException e) {
-						e.printStackTrace();
+						System.err.println(e.getMessage());
+						throw new ESException("La fermeture des variables ont échoué");
 					}
 			}
 

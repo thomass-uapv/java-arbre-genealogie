@@ -72,17 +72,18 @@ public class Individu extends Entree {
 					current = new Objet();
 					this.listeObjet.add((Objet) current);
 				}
-				if (!(splited[1].equals("FAMC") || splited[1].equals("FAMS"))) {
-					current.setLigne(cptLigne + i);
+				if (current != null) {
+					if (!(splited[1].equals("FAMC") || splited[1].equals("FAMS"))) {
+						current.setLigne(cptLigne + i);
+					}
+					current.parser(lines.get(i).trim(), cptLigne + i);
 				}
-				current.parser(lines.get(i).trim(), cptLigne + i);
 				i++;
 			} else {
 				if (current != null) {
 					String bloc = lines.get(i++).trim() + "\n";
 					int cptLigneDebutBloc = cptLigne + i - 1;
-					while (i < lines.size()
-							&& !lines.get(i).trim().split(" ")[0].equals(Integer.toString(this.getNiveau() + 1))) {
+					while (i < lines.size() && !lines.get(i).trim().split(" ")[0].equals(Integer.toString(this.getNiveau() + 1))) {
 						bloc += lines.get(i++).trim() + "\n";
 					}
 					current.parser(bloc, cptLigneDebutBloc);
@@ -151,11 +152,11 @@ public class Individu extends Entree {
 
 		if (this.famille != null) {
 			res += "  ".repeat(this.getNiveau() + 1) + Integer.toString(this.getNiveau() + 1) + " " + famille.getTag()
-					+ "C @F" + famille.getIdentificateur() + "@\n";
+			+ "C @F" + famille.getIdentificateur() + "@\n";
 		}
 		for (Famille fam : this.listeFamilleParent) {
 			res += "  ".repeat(this.getNiveau() + 1) + Integer.toString(this.getNiveau() + 1) + " " + fam.getTag()
-					+ "S @F" + fam.getIdentificateur() + "@\n";
+			+ "S @F" + fam.getIdentificateur() + "@\n";
 		}
 		for (Objet obj : listeObjet) {
 			res += obj.export() + "\n";
