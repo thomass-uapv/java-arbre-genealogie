@@ -19,13 +19,13 @@ import fr.arbre.genealogie.shell.commands.*;
 public class Shell {
 
 	/**
-	 * Collection qui correspond à la base de donnée qui contient la référence vers toutes les objets Familles qui ont été créé.<br>
+	 * Collection qui correspond à la base de données qui contient la référence vers tous les objets Familles qui ont été créés.<br>
 	 * Variable statique car on veut pouvoir y accéder dans tout le projet.
 	 */
 	private static ArrayList<Famille> bddFam = new ArrayList<Famille>();
 
 	/**
-	 * Collection qui correspond à la base de donnée qui contient la référence vers toutes les objets Individu qui ont été créé.<br>
+	 * Collection qui correspond à la base de données qui contient la référence vers tous les objets Individu qui ont été créé.<br>
 	 * Variable statique car on veut pouvoir y accéder dans tout le projet.
 	 */
 	private static ArrayList<Individu> bddInd = new ArrayList<Individu>();
@@ -37,7 +37,7 @@ public class Shell {
 	private boolean quit;
 
 	/**
-	 * Objet qui va récupérer l'entrée de l'utilisateur. C'est un objet de type  Reader, on peut lire caractère par caractère avec .read().
+	 * Objet qui va récupérer l'entrée de l'utilisateur. C'est un objet de type Reader, on peut lire caractère par caractère avec .read().
 	 */
 	private InputStreamReader isr;
 
@@ -186,7 +186,7 @@ public class Shell {
 	}
 
 	/**
-	 * Méthode statique qui renvoie la base de donnée des Familles.
+	 * Méthode statique qui renvoie la base de données des Familles.
 	 * @return Renvoie une collection qui contient la liste des Familles
 	 */
 	public static ArrayList<Famille> getBddListFam() {
@@ -194,14 +194,14 @@ public class Shell {
 	}
 
 	/**
-	 * Méthode statique qui vide la base de donnée des Familles.
+	 * Méthode statique qui vide la base de données des Familles.
 	 */
 	public static void clearBddListFam() {
 		bddFam.clear();
 	}
 
 	/**
-	 * Ajoute une Famille à la base de donnée.
+	 * Ajoute une Famille à la base de données.
 	 * @param f : Ajoute la Famille f à la collection qui contient la liste des Familles.
 	 */
 	public static void addBddFam(Famille f) {
@@ -209,7 +209,7 @@ public class Shell {
 	}
 
 	/**
-	 * Récupère une Famille dans la base de donnée.
+	 * Récupère une Famille dans la base de données.
 	 * @param id : identifiant de la famille qu'on souhaite récupérer.
 	 * @return Renvoie la Famille avec l'identifiant id ou null si elle n'existe pas.
 	 */
@@ -223,7 +223,7 @@ public class Shell {
 	}
 
 	/**
-	 * Méthode statique qui renvoie la base de donnée des Individus.
+	 * Méthode statique qui renvoie la base de données des Individus.
 	 * @return Renvoie une collection qui contient la liste des Individus.
 	 */
 	public static ArrayList<Individu> getBddListInd() {
@@ -231,14 +231,14 @@ public class Shell {
 	}
 
 	/**
-	 * Méthode statique qui vide la base de donnée des Individus.
+	 * Méthode statique qui vide la base de données des Individus.
 	 */
 	public static void clearBddListInd() {
 		bddInd.clear();
 	}
 
 	/**
-	 * Ajoute un Individu à la base de donnée.
+	 * Ajoute un Individu à la base de données.
 	 * @param i : Ajoute l'Individu i à la collection qui contient la liste des Individus.
 	 */
 	public static void addBddInd(Individu i) {
@@ -246,7 +246,7 @@ public class Shell {
 	}
 
 	/**
-	 * Récupère un Individu dans la base de donnée.
+	 * Récupère un Individu dans la base de données.
 	 * @param id : identifiant de l'Individu qu'on souhaite récupérer.
 	 * @return Renvoie l'Individu avec l'identifiant id ou null si il n'existe pas.
 	 */
@@ -260,7 +260,7 @@ public class Shell {
 	}
 
 	/**
-	 * Récupère un Individu dans la base de donnée.
+	 * Récupère un Individu dans la base de données.
 	 * @param nom : Les prénoms et le nom de l'Individu qu'on souhaite récupérer.
 	 * @return Renvoie l'Individu avec les prénoms et le nom ou null si il n'existe pas.
 	 */
@@ -283,3 +283,4 @@ public class Shell {
 	}
 
 }
+
