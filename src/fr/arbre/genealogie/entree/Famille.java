@@ -9,14 +9,37 @@ import fr.arbre.genealogie.tags.Marriage;
 import fr.arbre.genealogie.utils.Entree;
 import fr.arbre.genealogie.utils.TagTemplate;
 
+/**
+ * Un objet qui crée un lien entre différents individus. Une Famille hérite de Entree. Une Famille peut également avoir une date de marriage.
+ * @see Entree
+ */
 public class Famille extends Entree{
 
+	/**
+	 * Individu correspondant au père de la Famille.
+	 */
 	private Individu pere;
+
+	/**
+	 * Individu correspondant à la mère de la Famille.
+	 */
 	private Individu mere;
+
+	/**
+	 * Collection d'Individu contenant tous les enfants de la Famille.
+	 */
 	private ArrayList<Individu> enfants;
+
+	/**
+	 * Objet marriage correspondant au marriage des parents de la Famille.
+	 */
 	private Marriage mariage;
 
 
+	/**
+	 * Constructeur de la classe Famille. Tous les attributs sont définis à null ou "UNKNOWN".
+	 * @param id : l'identificateur de la Famille.
+	 */
 	public Famille(int id) {
 		super(0, "FAM", id);
 		this.pere = null;
@@ -71,6 +94,10 @@ public class Famille extends Entree{
 
 	}
 
+	/**
+	 * Renvoie le couple marié de la Famille (Père et mère).
+	 * @return collection qui contient le père et la mère.
+	 */
 	public ArrayList<Individu> whoMarried(){
 		ArrayList<Individu> res = new ArrayList<Individu>();
 		res.add(this.pere);
@@ -79,6 +106,11 @@ public class Famille extends Entree{
 
 	}
 
+	/**
+	 * Compare l'identificateur de la  Famille avec celui de la famille donnée en paramètre.
+	 * @param obj : Famille donnée en paramètre.
+	 * @return Vrai si l'identificateur de la  Famille est égale celui de la famille donnée en paramètre, sinon Faux.
+	 */
 	public boolean equals(Famille obj) {
 		return (this.getIdentificateur() == obj.getIdentificateur());
 	}
@@ -107,11 +139,12 @@ public class Famille extends Entree{
 		res += this.mariage.toString();
 		return res;
 	}
-	
+
+
 	@Override
 	public String export() {
 		String res = this.getNiveau() + " @F" + this.getIdentificateur() + "@ " + this.getTag() + "\n" +
-					this.mariage.export() + "\n";
+				this.mariage.export() + "\n";
 		if (this.pere != null) {
 			res += "  " + Integer.toString(this.getNiveau() + 1) + " HUSB @I" + this.pere.getIdentificateur() + "@\n";
 		}
@@ -122,41 +155,73 @@ public class Famille extends Entree{
 			res += "  " + Integer.toString(this.getNiveau() + 1) + " CHIL @I" + indi.getIdentificateur() + "@\n";
 		}
 		return res + "\n";
-		
+
 	}
-	
+
+	/**
+	 * Retourne l'individu correspondant au père.
+	 * @return Individu correspondant au père.
+	 */
 	public Individu getPere() {
 		return pere;
 	}
 
+	/**
+	 * Défini l'individu père de la Famille.
+	 * @param pere
+	 */
 	public void setPere(Individu pere) {
 		this.pere = pere;
 	}
 
+	/**
+	 * Retourne l'individu correspondant à la mère.
+	 * @return Individu correspondant à la mère.
+	 */
 	public Individu getMere() {
 		return mere;
 	}
 
+	/**
+	 * Défini l'individu mère de la Famille.
+	 * @param mere
+	 */
 	public void setMere(Individu mere) {
 		this.mere = mere;
 	}
 
+	/**
+	 * Retourne la liste des enfants de la Famille.
+	 * @return une collection d'enfants de la Famille.
+	 */
 	public ArrayList<Individu> getEnfants() {
 		return enfants;
 	}
-	
+
+	/**
+	 * Ajoute un enfant à la Famille
+	 * @param enfant : ajoute enfant à la collection d'enfants de la Famille.
+	 */
 	public void addEnfant(Individu enfant) {
 		this.enfants.add(enfant);
 	}
 
+	/**
+	 * Renvoie le mariage de la famille.
+	 * @return le mariage de la famille.
+	 */
 	public Marriage getMariage() {
 		return mariage;
 	}
 
+	/**
+	 * Défini le mariage de la famille.
+	 * @param mariage
+	 */
 	public void setMariage(Marriage mariage) {
 		this.mariage = mariage;
 	}
-	
-	
+
+
 
 }

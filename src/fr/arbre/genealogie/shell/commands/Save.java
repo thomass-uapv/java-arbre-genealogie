@@ -3,41 +3,37 @@ package fr.arbre.genealogie.shell.commands;
 import java.io.IOException;
 
 import fr.arbre.genealogie.exceptions.ArgsException;
+import fr.arbre.genealogie.exceptions.ESException;
 import fr.arbre.genealogie.io.Export;
 import fr.arbre.genealogie.utils.Command;
 
-public class Save implements Command{
-	private String args;
-	private String description;
 
+/**
+ * Classe de la commande save. Hérite de Command.
+ */
+public class Save extends Command{
+
+	/**
+	 * Constructeur de la classe Save.
+	 */
 	public Save () {
-		super();
-		this.args = null;
-		this.description = "export <path> - Exporter la base de donnée dans un fichier GED (Alias : save)";
+		super(null, "export <path> - Exporter la base de donnée dans un fichier GED (Alias : save)");
 	}
-		
+
 	@Override
-	public String getResult() throws IOException, ArgsException{
+	public String getResult() throws ArgsException, ESException{
 		if (args == null || args.isBlank()) {
 			this.args = "output.ged";
 		}
 		System.out.println(args);
-		Export exp = new Export(args);
-		String path = exp.export();
-		return "Sauvegarde effectuée à l'adresse : " + path;
+		Export exp;
+		try {
+			exp = new Export(args);
+			String path = exp.export();
+			return "Sauvegarde effectuée à l'adresse : " + path;
+		} catch (IOException e) {
+			throw new ESException("L'exportation a échouée");
+		}
 	}
-	
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
-	
-	public void setArgs(String args) {
-		this.args = args;
-	}
-	
-	public String getArgs() {
-		return args;
-	}
-	
+
 }

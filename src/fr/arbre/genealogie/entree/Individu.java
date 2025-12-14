@@ -13,16 +13,51 @@ import fr.arbre.genealogie.tags.Sex;
 import fr.arbre.genealogie.utils.Entree;
 import fr.arbre.genealogie.utils.TagTemplate;
 
+/**
+ * Un objet qui associe différentes informations d'un même individu. Un Individu hérite de Entree.
+ * @see Entree
+ */
 public class Individu extends Entree {
 
+	/**
+	 * Le nom de l'individu.
+	 */
 	private Name nom;
+
+	/**
+	 * Le sexe de l'individu.
+	 */
 	private Sex sexe;
+
+	/**
+	 * La naissance de l'individu.
+	 */
 	private Birth naissance;
+
+	/**
+	 * Le décès de l'individu.
+	 */
 	private Death deces;
+
+	/**
+	 * La famille où l'individu est enfant.
+	 */
 	private Famille famille;
+
+	/**
+	 * La liste des familles où l'individu est parent.
+	 */
 	private ArrayList<Famille> listeFamilleParent;
+
+	/**
+	 * La liste des documents associés à l'individu.
+	 */
 	private ArrayList<Objet> listeObjet;
 
+	/**
+	 * Constructeur de le classe Individu. On instancie tous les attributs de l'individu.
+	 * @param id
+	 */
 	public Individu(int id) {
 		super(0, "INDI", id);
 		this.nom = new Name();
@@ -51,8 +86,7 @@ public class Individu extends Entree {
 					int id = Integer.parseInt(splited[2].substring(2, splited[2].length() - 1));
 					current = Shell.getBddFam(id);
 					if (current == null) {
-						MissingEntreeException e = new MissingEntreeException(
-								"Famille manquante, création de la famille...", cptLigne + i);
+						MissingEntreeException e = new MissingEntreeException("Famille manquante, création de la famille...", cptLigne + i);
 						System.err.println(e.getMessage());
 						current = new Famille(id);
 						Shell.addBddFam((Famille) current);
@@ -95,10 +129,19 @@ public class Individu extends Entree {
 
 	}
 
+	/**
+	 * Compare l'identificateur de l'Individu avec celui de l'Individu donné en paramètre.
+	 * @param obj : Individu donnée en paramètre.
+	 * @return Vrai si l'identificateur de l'Individu est égale celui de l'Individu donné en paramètre, sinon Faux.
+	 */
 	public boolean equals(Individu obj) {
 		return (this.getIdentificateur() == obj.getIdentificateur());
 	}
 
+	/**
+	 * Renvoie la liste des individus avec qui l'individu est marié.
+	 * @return une collection des individus avec qui l'individu est marié.
+	 */
 	public ArrayList<Individu> marriedWith() {
 		ArrayList<Individu> marriedWith = new ArrayList<Individu>();
 		for (Famille fam : this.listeFamilleParent) {
@@ -164,58 +207,113 @@ public class Individu extends Entree {
 		return res + "\n";
 	}
 
+	/**
+	 * Renvoie le nom de l'individu.
+	 * @return le nom de l'individu.
+	 */
 	public Name getNom() {
 		return nom;
 	}
 
+	/**
+	 * Défini le nom de l'individu.
+	 * @param nom
+	 */
 	public void setNom(Name nom) {
 		this.nom = nom;
 	}
 
+	/**
+	 * Renvoie le sexe de l'individu.
+	 * @return le sexe de l'individu.
+	 */
 	public Sex getSexe() {
 		return sexe;
 	}
 
+	/**
+	 * Défini le sexe de l'individu.
+	 * @param sexe
+	 */
 	public void setSexe(Sex sexe) {
 		this.sexe = sexe;
 	}
 
+	/**
+	 * Renvoie la naissance de l'individu.
+	 * @return la naissance de l'individu.
+	 */
 	public Birth getNaissance() {
 		return naissance;
 	}
 
+	/**
+	 * Défini la naissance de l'individu.
+	 * @param naissance
+	 */
 	public void setNaissance(Birth naissance) {
 		this.naissance = naissance;
 	}
 
+	/**
+	 * Renvoie le décès de l'individu.
+	 * @return le décès de l'individu.
+	 */
 	public Death getDeces() {
 		return deces;
 	}
 
+	/** Définie le décès de l'individu (voir classe Death).
+	 * @param deces
+	 */
 	public void setDeces(Death deces) {
 		this.deces = deces;
 	}
 
+	/**
+	 * Renvoie la famille où l'individu est enfant.
+	 * @return le famille où l'individu est enfant.
+	 */
 	public Famille getFamille() {
 		return famille;
 	}
 
+	/**
+	 * Défini la famille où l'individu est enfant.
+	 * @param famille
+	 */
 	public void setFamille(Famille famille) {
 		this.famille = famille;
 	}
 
+	/**
+	 * Renvoie la liste des familles où l'individu est parent.
+	 * @return la liste des familles où l'individu est parent.
+	 */
 	public ArrayList<Famille> getListeFamilleParent() {
 		return listeFamilleParent;
 	}
 
+	/**
+	 * Ajoute une famille où l'individu est parent.
+	 * @param fam
+	 */
 	public void addListeFamilleParent(Famille fam) {
 		this.listeFamilleParent.add(fam);
 	}
 
+	/**
+	 * Renvoie la liste des documents associés à l'individu.
+	 * @return la liste des documents associés à l'individu.
+	 */
 	public ArrayList<Objet> getListeObjet() {
 		return listeObjet;
 	}
 
+	/**
+	 * Ajoute un document associé à l'individu.
+	 * @param objet
+	 */
 	public void addListeObjet(Objet objet) {
 		this.listeObjet.add(objet);
 	}

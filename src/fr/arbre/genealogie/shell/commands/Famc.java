@@ -7,17 +7,18 @@ import fr.arbre.genealogie.exceptions.MissingEntreeException;
 import fr.arbre.genealogie.shell.Shell;
 import fr.arbre.genealogie.utils.Command;
 
-public class Famc implements Command{
+/**
+ * Classe de la commande famc. Hérite de Command.
+ */
+public class Famc extends Command{
 
-	private String args;
-	private String description;
-
+	/**
+	 * Constructeur de la classe Famc.
+	 */
 	public Famc() {
-		super();
-		this.args = null;
-		this.description = "famc <Prénoms+Nom/ID> - Afficher toutes les informations de la famille de l'individu";
+		super(null, "famc <Prénoms+Nom/ID> - Afficher toutes les informations de la famille de l'individu");
 	}
-	
+
 	@Override
 	public String getResult() throws ArgsException, MissingEntreeException{
 		if (args == null || args.isBlank()) {
@@ -31,28 +32,15 @@ public class Famc implements Command{
 			indi = Shell.getBddInd(args);
 		}
 		if (indi == null) {
-			throw new MissingEntreeException("Aucun individu n'a été trouvé !", -1);
+			// Cette exception a été volontairement utilisé pour indiquer à l'utilisateur qu'aucun individu a été trouvé.
+			throw new MissingEntreeException("Aucun individu n'a été trouvé !");
 		}
 		Famille fam = indi.getFamille();
 		if (fam != null) {
 			return fam.toString();
 		} else {			
-			throw new MissingEntreeException("Cet individu n'a pas de famille renseignée.", -1);
+			throw new MissingEntreeException("Cet individu n'a pas de famille renseignée.");
 		}
 	}
-
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
-	
-	public void setArgs(String args) {
-		this.args = args;
-	}
-	
-	public String getArgs() {
-		return args;
-	}
-
 
 }

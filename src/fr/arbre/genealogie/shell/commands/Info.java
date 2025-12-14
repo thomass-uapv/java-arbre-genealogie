@@ -6,17 +6,19 @@ import fr.arbre.genealogie.exceptions.MissingEntreeException;
 import fr.arbre.genealogie.shell.Shell;
 import fr.arbre.genealogie.utils.Command;
 
-public class Info implements Command{
 
-	private String args;
-	private String description;
+/**
+ * Classe de la commande info. Hérite de Command.
+ */
+public class Info extends Command{
 
+	/**
+	 * Constructeur de la classe Info.
+	 */
 	public Info() {
-		super();
-		this.args = null;
-		this.description = "info <Prénoms+Nom/ID> - Afficher des informations sur l'individu";
+		super(null, "info <Prénoms+Nom/ID> - Afficher des informations sur l'individu");
 	}
-		
+
 	@Override
 	public String getResult() throws ArgsException, MissingEntreeException{
 		if (args == null || args.isBlank()) {
@@ -30,22 +32,10 @@ public class Info implements Command{
 			indi = Shell.getBddInd(args);
 		}
 		if (indi == null) {
-			throw new MissingEntreeException("Aucun individu n'a été trouvé !", -1);
+			// Cette exception a été volontairement utilisé pour indiquer à l'utilisateur qu'aucun individu a été trouvé.
+			throw new MissingEntreeException("Aucun individu n'a été trouvé !");
 		}
 		return indi.toString();
-	}
-
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
-	
-	public void setArgs(String args) {
-		this.args = args;
-	}
-	
-	public String getArgs() {
-		return args;
 	}
 
 }

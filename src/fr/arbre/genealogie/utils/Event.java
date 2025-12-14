@@ -6,11 +6,27 @@ import java.util.Arrays;
 import fr.arbre.genealogie.tags.Date;
 import fr.arbre.genealogie.tags.Place;
 
+/**
+ * Classe abstraite correspond à des TAGs particuliers du standard GEDOM.<br>
+ * Les Tags qui ont besoin d'une date et d'un lieu hériteront de cette classe.
+ */
 public abstract class Event extends TagTemplate{
 
+	/**
+	 * Objet correspondant au TAG DATE
+	 */
 	private Date date;
+
+	/**
+	 * Objet correspondant au TAG PLAC
+	 */
 	private Place lieu;
 
+	/**
+	 * Constructeur de la classe Event. La date et le lieu sont initialisées. Voir classe Date et Place<br>
+	 * @param niveau : niveau de profondeur de l'arbre (voir Standard GEDOM) où se situe le Tag.
+	 * @param tag : le nom du Tag
+	 */
 	public Event(int niveau, String tag) {
 		super(niveau, tag);
 		this.date = new Date();
@@ -57,18 +73,32 @@ public abstract class Event extends TagTemplate{
 				this.lieu.export();
 	}
 
+	/**
+	 * Renvoie l'objet Date
+	 * @return l'objet Date
+	 */
 	public Date getDate() {
 		return date;
 	}
 
+	/**
+	 * Défini l'objet Date
+	 */
 	public void setDate(Date date) {
 		this.date = date;
 	}
 
+	/**
+	 * Renvoie l'objet Lieu
+	 * @return l'objet Place
+	 */
 	public Place getLieu() {
 		return lieu;
 	}
 
+	/**
+	 * Défini l'objet Lieu
+	 */
 	public void setLieu(Place lieu) {
 		this.lieu = lieu;
 	}

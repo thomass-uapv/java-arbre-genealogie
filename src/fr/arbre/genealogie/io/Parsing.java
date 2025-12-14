@@ -1,7 +1,6 @@
 package fr.arbre.genealogie.io;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,21 +14,44 @@ import fr.arbre.genealogie.exceptions.InvalidParameterException;
 import fr.arbre.genealogie.shell.Shell;
 import fr.arbre.genealogie.utils.Entree;
 
+/**
+ * Classe correspondant au Parsing général du fichier GED. 
+ */
 public class Parsing{
+
+	/**
+	 * Une liste des indices des individus que le parser va trouver dans le fichier.
+	 */
 	private ArrayList<Integer> individusIndice;
+
+	/**
+	 * Une liste des indices des familles que le parser va trouver dans le fichier.
+	 */
 	private ArrayList<Integer> famillesIndice;
+
+	/**
+	 * Un compteur correspondant à la ligne qu'on est en train de lire dans le fichier.
+	 */
 	private int cptLigne;
 
 
+	/**
+	 * Constructeur de la classe Parsing.
+	 */
 	public Parsing() {
 		this.individusIndice = new ArrayList<Integer>();
 		this.famillesIndice = new ArrayList<Integer>();
 		this.cptLigne = 0;
 	}
 
-
-
-	public void parser(String filepath) throws InvalidParameterException, InvalidIdentifiantsException, FileNotFoundException, ESException {
+	/**
+	 * Méthode de parsing du Parser général. C'est cette méthode qui va ouvrir le fichier, et faire la lecture du niveau le plus élevé (0) du fichier.
+	 * @param filepath : Le chemin d'accès avec le nom du fichier GED qu'on veut utiliser.
+	 * @throws InvalidParameterException
+	 * @throws InvalidIdentifiantsException
+	 * @throws ESException
+	 */
+	public void parser(String filepath) throws InvalidParameterException, InvalidIdentifiantsException, ESException {
 		if (filepath.isEmpty()) {
 			throw new InvalidParameterException("Paramètre filepath vide.");
 		} else {
@@ -118,22 +140,22 @@ public class Parsing{
 						throw new InvalidIdentifiantsException("Identifiants de familles incorrects.");
 					}
 				}
-			
+
 			} catch (IOException e) {
 				System.err.println(e.getMessage());
-				throw new ESException("L'importation a écouhé");
+				throw new ESException("L'importation a échoué");
 			} finally {
-					try {
-						if (contentFile != null) {							
-							contentFile.close();
-						}
-						if (fr != null) {							
-							fr.close();
-						}
-					} catch (IOException e) {
-						System.err.println(e.getMessage());
-						throw new ESException("La fermeture des variables ont échoué");
+				try {
+					if (contentFile != null) {							
+						contentFile.close();
 					}
+					if (fr != null) {							
+						fr.close();
+					}
+				} catch (IOException e) {
+					System.err.println(e.getMessage());
+					throw new ESException("La fermeture des variables ont échoué");
+				}
 			}
 
 		}

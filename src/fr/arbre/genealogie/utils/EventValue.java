@@ -3,10 +3,22 @@ package fr.arbre.genealogie.utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Classe abstraite correspond à des TAGs particuliers du standard GEDOM.<br>
+ * Cette classe est spécifique aux attributs d'un objet Event (voir classe Event)
+ */
 public abstract class EventValue extends TagTemplate {
 
+	/**
+	 * Valeur du Tag.
+	 */
 	private String eventValue;
 
+	/**
+	 * Constructeur de la classe EventValue. Les attributs sont définis à null ou "UNKNOWN".
+	 * @param niveau
+	 * @param tag
+	 */
 	public EventValue(int niveau, String tag) {
 		super(niveau, tag);
 		this.eventValue = "UNKNOWN";
@@ -31,10 +43,18 @@ public abstract class EventValue extends TagTemplate {
 		return "  ".repeat(this.getNiveau()) + " " + this.getNiveau() + " " + this.getTag() + " " + this.eventValue;
 	}
 
+	/**
+	 * Renvoie la valeur du TAG.
+	 * @return la valeur du TAG.
+	 */
 	public String getEventValue() {
 		return eventValue;
 	}
 
+	/**
+	 * Défini la valeur du TAG.
+	 * @param value
+	 */
 	public void setEventValue(String value) {
 		this.eventValue = value;
 	}

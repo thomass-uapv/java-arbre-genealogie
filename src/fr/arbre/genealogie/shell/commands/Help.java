@@ -4,21 +4,36 @@ import java.util.ArrayList;
 
 import fr.arbre.genealogie.utils.Command;
 
-public class Help implements Command{
+/**
+ * Classe de la commande help. Hérite de Command.
+ */
+public class Help extends Command{
+
+	/**
+	 * Contient la liste des descriptifs de chaque commande.
+	 */
 	private ArrayList<String> listeCommands;
-	private String description;
 
-
+	/**
+	 * Constructeur de la classe Help.
+	 */
 	public Help() {
-		super();
+		super(null, "help - Afficher le menu d'aide (Alias : ?)");
 		this.listeCommands = null;
-		this.description = "help - Afficher le menu d'aide (Alias : ?)";
 	}
-	
+
+	/**
+	 * Défini la liste des descriptions des commandes.
+	 * @param listeCommands
+	 */
 	public void setListeCommands(ArrayList<String> listeCommands) {
 		this.listeCommands = listeCommands;
 	}
 
+	/**
+	 * Retourne la liste des descriptifs de chaque commande.
+	 * @return la liste des descriptifs de chaque commande.
+	 */
 	public ArrayList<String> getListeCommands() {
 		return listeCommands;
 	}
@@ -32,10 +47,6 @@ public class Help implements Command{
 		return res;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
 	@Override
 	public void setArgs(String args) {
 		System.err.println("Cette commande n'attend aucun argument!");
@@ -45,5 +56,5 @@ public class Help implements Command{
 	public String getArgs() {
 		return null;
 	}
-	
+
 }

@@ -2,8 +2,15 @@ package fr.arbre.genealogie.tags;
 
 import fr.arbre.genealogie.utils.Event;
 
+/**
+ * Classe pour le TAG MARR du standard GEDOM. Hérite de Event.
+ */
 public class Marriage extends Event{
-		public Marriage() {
+
+	/**
+	 * Constructeur de la classe Marriage.
+	 */
+	public Marriage() {
 		super(1, "MARR");
 	}
 

@@ -8,16 +8,15 @@ import fr.arbre.genealogie.exceptions.ArgsException;
 import fr.arbre.genealogie.shell.Shell;
 import fr.arbre.genealogie.utils.Command;
 
-public class Graph implements Command{
+/**
+ * Classe de la commande graph. Hérite de Command.
+ */
+public class Graph extends Command{
 
-	private String args;
-	private String description;
 	private int profondeur;
 
 	public Graph() {
-		super();
-		this.args = null;
-		this.description = "graph [profondeur] - Afficher le contenu de la base de donnée";
+		super(null, "graph [profondeur] - Afficher le contenu de la base de donnée");
 		this.profondeur = -1;
 	}
 
@@ -47,6 +46,12 @@ public class Graph implements Command{
 		return res;
 	}
 
+	/**
+	 * Méthode privée récursive qui va dessiner petit à petit le graphe.
+	 * @param current : la famille actuelle qu'on cherche à dessiner.
+	 * @param lvl : le niveau de profondeur (pour dessiner une hiérarchie).
+	 * @return String contenant le graphe dessiné.
+	 */
 	private String dessiner(Famille current, int lvl) {
 		String res = "";
 		if (current != null) {
@@ -80,19 +85,5 @@ public class Graph implements Command{
 		}
 		return res;
 	}
-
-	@Override
-	public String getDescription() {
-		return this.description;
-	}
-	
-	public void setArgs(String args) {
-		this.args = args;
-	}
-	
-	public String getArgs() {
-		return args;
-	}
-
 
 }

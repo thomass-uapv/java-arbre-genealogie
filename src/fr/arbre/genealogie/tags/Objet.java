@@ -6,14 +6,28 @@ import java.util.Arrays;
 import fr.arbre.genealogie.utils.TagTemplate;
 
 /**
- * 
+ * Classe pour le TAG OBJE du standard GEDOM. Hérite de TagTemplate.
  */
 public class Objet extends TagTemplate{
 
+	/**
+	 * Contient le format de l'objet.
+	 */
 	private Format format;
+
+	/**
+	 * Contient le titre de l'objet.
+	 */
 	private Title titre;
+
+	/**
+	 * Contient le lien du fichier de l'objet.
+	 */
 	private Fichier fichier;
 
+	/**
+	 * Constructeur de l'objet.
+	 */
 	public Objet() {
 		super(1, "OBJE");
 		this.format = new Format();
@@ -72,32 +86,56 @@ public class Objet extends TagTemplate{
 				"  - Lien : " + this.fichier + "\n";
 	}
 
+	/**
+	 * Renvoie le format de l'objet
+	 * @return le format de l'objet
+	 */
 	public Format getFormat() {
 		return format;
 	}
 
+	/**
+	 * Défini le format de l'objet.
+	 * @param format : le format à définir
+	 */
 	public void setFormat(Format format) {
 		this.format = format;
 	}
 
+	/**
+	 * Renvoie le titre de l'objet.
+	 * @return le titre de l'objet.
+	 */
 	public Title getTitre() {
 		return titre;
 	}
 
+	/**
+	 * Défini le titre de l'objet.
+	 * @param titre : défini le titre de l'objet.
+	 */
 	public void setTitre(Title titre) {
 		this.titre = titre;
 	}
 
+	/**
+	 * Renvoie le lien du fichier de l'objet.
+	 * @return le lien du fichier de l'objet.
+	 */
 	public Fichier getFichier() {
 		return fichier;
 	}
 
+	/**
+	 * Défini le lien du fichier de l'objet.
+	 * @param fichier : le lien du fichier à définir.
+	 */
 	public void setFichier(Fichier fichier) {
 		this.fichier = fichier;
 	}
-	
-	
-	
-	
+
+
+
+
 
 }

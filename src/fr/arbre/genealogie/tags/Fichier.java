@@ -5,10 +5,19 @@ import java.util.Arrays;
 
 import fr.arbre.genealogie.utils.TagTemplate;
 
+/**
+ * Classe pour le TAG FILE du standard GEDOM. Hérite de TagTemplate.
+ */
 public class Fichier extends TagTemplate{
 
+	/**
+	 * Le lien du fichier
+	 */
 	private String url;
 
+	/**
+	 * Constructeur de la classe Fichier. Défini la valeur de l'url à UNKNOWN.
+	 */
 	public Fichier( ) {
 		super(2, "FILE");
 		this.url = "UNKNOWN";
@@ -23,10 +32,18 @@ public class Fichier extends TagTemplate{
 		}
 	}
 
+	/**
+	 * Renvoie le lien du fichier
+	 * @return String qui renvoie le lien du fichier
+	 */
 	public String getUrl() {
 		return url;
 	}
-	
+
+	/**
+	 * Défini le lien du fichier
+	 * @param url
+	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}
