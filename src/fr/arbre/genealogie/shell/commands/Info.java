@@ -32,10 +32,11 @@ public class Info extends Command{
 			indi = Shell.getBddInd(args);
 		}
 		if (indi == null) {
-			// Cette exception a été volontairement utilisé pour indiquer à l'utilisateur qu'aucun individu a été trouvé.
+			// Cette exception a été volontairement utilisée pour indiquer à l'utilisateur qu'aucun Individu a été trouvé.
 			throw new MissingEntreeException("Aucun individu n'a été trouvé !");
 		}
 		return indi.toString();
 	}
 
 }
+
