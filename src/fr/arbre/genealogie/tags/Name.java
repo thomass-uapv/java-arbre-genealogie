@@ -82,7 +82,7 @@ public class Name extends TagTemplate{
 	}
 
 	/**
-	 * Défini la valeur du nom
+	 * Définit la valeur du nom
 	 * @param nom : le nom à définir
 	 */
 	public void setNom(String nom) {
@@ -106,3 +106,4 @@ public class Name extends TagTemplate{
 	}
 
 }
+
