@@ -42,7 +42,7 @@ public class Title extends TagTemplate{
 	}
 
 	/**
-	 * Défini la valeur du titre
+	 * Définit la valeur du titre
 	 * @param t
 	 */
 	public void setT(String t) {
@@ -60,3 +60,4 @@ public class Title extends TagTemplate{
 	}
 
 }
+
