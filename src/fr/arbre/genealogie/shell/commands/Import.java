@@ -104,7 +104,7 @@ public class Import extends Command {
 	}
 
 	/**
-	 * Méthode privée qui vérifie si le sexe de l'individu étant père ou mère est bien respecté. Renvoie une exception si ce n'est pas le cas.
+	 * Méthode privée qui vérifie si le sexe de l'Individu étant père ou mère est bien respecté. Renvoie une exception si ce n'est pas le cas.
 	 * @throws IncorrectSexeException
 	 */
 	private void checkSexe() throws IncorrectSexeException {
@@ -119,7 +119,7 @@ public class Import extends Command {
 	}
 
 	/**
-	 * Méthode privée qui vérifie si il existe bien un lien réciproque entre un individu fixé et une famille fixée. Si ce n'est pas le cas, une Exception est levée.
+	 * Méthode privée qui vérifie si il existe bien un lien réciproque entre un Individu fixé et une Famille fixée. Si ce n'est pas le cas, une Exception est levée.
 	 * @throws IncorrectSexeException
 	 * @throws ChildLinkException
 	 * @throws ParentLinkException
@@ -177,3 +177,4 @@ public class Import extends Command {
 		return p;
 	}
 }
+
