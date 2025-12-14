@@ -107,9 +107,9 @@ public class Famille extends Entree{
 	}
 
 	/**
-	 * Compare l'identificateur de la  Famille avec celui de la famille donnée en paramètre.
+	 * Compare l'identificateur de la Famille avec celui de la famille donnée en paramètre.
 	 * @param obj : Famille donnée en paramètre.
-	 * @return Vrai si l'identificateur de la  Famille est égale celui de la famille donnée en paramètre, sinon Faux.
+	 * @return Vrai si l'identificateur de la Famille est égale celui de la famille donnée en paramètre, sinon Faux.
 	 */
 	public boolean equals(Famille obj) {
 		return (this.getIdentificateur() == obj.getIdentificateur());
@@ -159,7 +159,7 @@ public class Famille extends Entree{
 	}
 
 	/**
-	 * Retourne l'individu correspondant au père.
+	 * Retourne l'Individu correspondant au père.
 	 * @return Individu correspondant au père.
 	 */
 	public Individu getPere() {
@@ -167,7 +167,7 @@ public class Famille extends Entree{
 	}
 
 	/**
-	 * Défini l'individu père de la Famille.
+	 * Définit l'Individu père de la Famille.
 	 * @param pere
 	 */
 	public void setPere(Individu pere) {
@@ -175,7 +175,7 @@ public class Famille extends Entree{
 	}
 
 	/**
-	 * Retourne l'individu correspondant à la mère.
+	 * Retourne l'Individu correspondant à la mère.
 	 * @return Individu correspondant à la mère.
 	 */
 	public Individu getMere() {
@@ -183,7 +183,7 @@ public class Famille extends Entree{
 	}
 
 	/**
-	 * Défini l'individu mère de la Famille.
+	 * Définit l'individu mère de la Famille.
 	 * @param mere
 	 */
 	public void setMere(Individu mere) {
@@ -215,7 +215,7 @@ public class Famille extends Entree{
 	}
 
 	/**
-	 * Défini le mariage de la famille.
+	 * Définit le mariage de la famille.
 	 * @param mariage
 	 */
 	public void setMariage(Marriage mariage) {
@@ -225,3 +225,4 @@ public class Famille extends Entree{
 
 
 }
+
