@@ -23,7 +23,7 @@ public class Help extends Command{
 	}
 
 	/**
-	 * Défini la liste des descriptions des commandes.
+	 * Définit la liste des descriptions des commandes.
 	 * @param listeCommands
 	 */
 	public void setListeCommands(ArrayList<String> listeCommands) {
@@ -58,3 +58,4 @@ public class Help extends Command{
 	}
 
 }
+
